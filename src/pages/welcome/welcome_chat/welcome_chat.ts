@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { LoginServiceProvider } from '../../../providers/login-service/login-service';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,12 @@ export class WelcomeChatPage {
 
   private pass: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public signed: boolean = false;
+
+  constructor(public navCtrl: NavController, 
+    public loginService: LoginServiceProvider,
+    public toastCtrl:ToastController,
+    public navParams: NavParams) {
     this.cpf_cnpj = this.navParams.get('cpf_cnpj')
 
   }
@@ -36,7 +42,7 @@ export class WelcomeChatPage {
     let current_length = that.typewriter_display.length;
     if (current_length < total_length) {
       that.typewriter_display += that.typewriter_text[current_length];
-      setTimeout(that.typingCallback, 40, that);
+      setTimeout(that.typingCallback, 1, that);
     } else {
       that.enable_next_button = true;
     }
@@ -47,17 +53,35 @@ export class WelcomeChatPage {
   }
 
   sign(pass){
-    console.log(this.cpf_cnpj + "  " + pass)
-    if(this.cpf_cnpj == "018.018.501-27" && pass == "123456"){
-      this.navCtrl.setRoot('NavigationPage')
-    }else{
-      let cpf_cnpj = this.cpf_cnpj
-      this.navCtrl.push('WelcomeWrongPassPage',{cpf_cnpj} )
-    }
+    this.cpf_cnpj = this.navParams.get('data')
+    this.loginService.getCandidate(this.cpf_cnpj,pass)
+    .subscribe((response) => {
+      if (response == 'Senha ou usuário inválido.'){
+        this.presentToast(response)
+        console.log(response)
+      }else{
+        this.loginService.signUser(this.cpf_cnpj,pass)
+        this.navCtrl.setRoot('NavigationPage')
+      }
+    })
+
   }
 
   goToPass() {
     this.navCtrl.push('WelcomePassPage')
   }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 6000,
+      position:'middle'
+    });
+    toast.onDidDismiss(() => {
+      console.log('Mensagem Fechada');
+    });
+
+    toast.present();
+  }
+
 }
 

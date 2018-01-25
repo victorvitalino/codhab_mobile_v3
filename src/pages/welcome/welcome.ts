@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , LoadingController} from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LoginServiceProvider } from '../../providers/login-service/login-service';
+
+
 
 @IonicPage()
 @Component({
@@ -9,17 +13,23 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 export class WelcomePage {
 
-  cpf_cnpj = '';
+  cpf_cnpj: string = '';
   DECIMAL_SEPARATOR=".";
   GROUP_SEPARATOR=",";
   pureResult: any;
+  candidate: object;
   maskedId: any;
   val: any;
   v: any;
+  teste:any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public geolocation: Geolocation,
+    public loginService: LoginServiceProvider,
+    public load: LoadingController
     ) {
+
   }
 
   format(valString) {
@@ -73,11 +83,22 @@ export class WelcomePage {
 
 
   startChat(cpf_cnpj) {
-    if (cpf_cnpj == '018.018.501-27') {
-      this.navCtrl.push('WelcomeChatPage',{cpf_cnpj});
-    } else {
-      this.navCtrl.push('WelcomeNoUserPage')
-    }
+    let loader = this.load.create({
+      content: "Pesquisando..."
+    });
+    loader.present();
+    this.cpf_cnpj = this.unFormat(cpf_cnpj)
+      this.loginService.getCheckCandidate(this.cpf_cnpj)
+      .subscribe((response) =>{
+        if (response == 'cpf não encontrado.'){
+          loader.dismiss();
+          this.navCtrl.push('WelcomeNoUserPage')
+        }else{
+          loader.dismiss();
+          this.navCtrl.push('WelcomeChatPage', { data : this.cpf_cnpj });
+        }
+      });
+    
   }
 
   goToHome() {

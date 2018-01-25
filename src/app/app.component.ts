@@ -10,6 +10,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { LoginServiceProvider } from '../providers/login-service/login-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +26,9 @@ export class MyApp {
   portalNav         : boolean = false;
   cadastreNav       : boolean = false;
   serviceNav        : boolean = false;
-
+  latitude          : number;
+  longitude         : number;
+  user              : boolean = false;
 
   typewriter_text   : string;
   typewriter_display: string = "";
@@ -38,7 +41,9 @@ export class MyApp {
               private geolocation: Geolocation,
               private ga: GoogleAnalytics,
               public iab:InAppBrowser,
-              public dataServiceProvider: DataServiceProvider) {
+              public dataServiceProvider: DataServiceProvider,
+              public loginService: LoginServiceProvider
+            ) {
 
     this.initializeApp();
 
@@ -49,6 +54,14 @@ export class MyApp {
     }).catch(e => console.log('Error starting GoogleAnalytics', e));
 
     platform.ready().then(() => {
+
+      this.geolocation.getCurrentPosition().then((resp) => {
+        this.latitude = resp.coords.latitude;
+        this.longitude = resp.coords.longitude
+
+      }).catch((error) => {
+        console.log(error)
+      })
 
       // ebef79f2-9b94-4c8b-ad48-d7e4b304b2cc  chave teste onesingal
       this.oneSignal.startInit("f8691fb0-e0c9-4d6a-b927-c795b65727c5", "190801927723");
@@ -153,6 +166,7 @@ export class MyApp {
 
   goToMorarBem(){
     // this.iab.create()
+    console.log(this.latitude)
   }
   goToSobreCodhab(){
     this.iab.create('http://www.codhab.df.gov.br/pagina/3', '_self')
@@ -222,5 +236,9 @@ export class MyApp {
   }
   goToIndication() {
     this.nav.push('CandidateProfileIndicationPage');
+  }
+  sign(){
+    this.user = true
+    console.log(this.user)
   }
 }

@@ -1,10 +1,16 @@
 <ion-menu [content]="content" id="menu-material">
   <ion-content>
-    <div class="menu-header">
+    <div class="menu-header" *ngIf="user">
       <img class="user-avatar round" style="height:70px;max-width:70px;" [src]="chosenPicture || placeholder" onerror="this.src='assets/images/profile-1.jpg'">
       <h1 class="name">Frederico Maxmiliano</h1>
       <h3 class="situation">Habilitado - documentação aprovada</h3>
       <h3 class="position">Posição 15482º</h3>
+    </div>
+    <div class="menu-header login-box" *ngIf="!user">
+      <h3>Parece que você não está logado. Por favor faça o acesso da sua conta
+        <b>CODHAB</b>
+      </h3>
+      <button ion-button color="primary" (click)="sign()">Acessar</button>
     </div>
     <ion-list no-lines>
 
@@ -18,7 +24,7 @@
 
       <!-- INICIO MEU CADASTRO -->
 
-      <ion-item (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
+      <ion-item *ngIf="user" (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
         <div class='item-side'>
           <img src='assets/images/icon-smartphone.png' width=20>
           <span>Meu cadastro</span>
@@ -26,32 +32,32 @@
       </ion-item>
       <ion-list *ngIf='this.cadastreNav === true' class='sub-list'>
 
-        <ion-item  menuClose (click)="gotToCandidate()">
+        <ion-item menuClose (click)="gotToCandidate()">
           <span>Área do candidato</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNotification()">
+        <ion-item menuClose (click)="goToNotification()">
           <span>Notificações</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToProfile()">
+        <ion-item menuClose (click)="goToProfile()">
           <span>Meus dados</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToUpdates()">
+        <ion-item menuClose (click)="goToUpdates()">
           <span>Atualizações</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToChat()">
+        <ion-item menuClose (click)="goToChat()">
           <span>Conversas</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToRequirements()">
+        <ion-item menuClose (click)="goToRequirements()">
           <span>Requerimentos</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToSchedules()">
+        <ion-item menuClose (click)="goToSchedules()">
           <span>Agendamentos</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToIndication()">
+        <ion-item menuClose (click)="goToIndication()">
           <span>Indicação à empreendimento</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Pendências</span>
         </ion-item>
       </ion-list>
@@ -60,7 +66,7 @@
 
       <!-- INICIO HABITACAO -->
 
-      <ion-item  (click)="openHabitationNav()" id="habitation" [ngClass]="{'sub-list-item': this.habitationNav === true}">
+      <ion-item (click)="openHabitationNav()" id="habitation" [ngClass]="{'sub-list-item': this.habitationNav === true}">
         <div class='item-side'>
           <img src='assets/images/icon-house.png' width=20>
           <span>Habitação</span>
@@ -69,23 +75,23 @@
 
       <ion-list *ngIf='this.habitationNav === true' class='sub-list'>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToMorarBem()">
           <span>Morar Bem</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Aluguel Legal</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Portas Abertas</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Projeto na Medida</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Lote Legal</span>
         </ion-item>
 
@@ -103,23 +109,23 @@
       </ion-item>
       <ion-list *ngIf='this.regularizationNav === true' class='sub-list'>
 
-        <ion-item  menuClose (click)="goToRegConheca()">
+        <ion-item menuClose (click)="goToRegConheca()">
           <span>Conheça o programa</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Agendamentos</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToRegDoc()">
+        <ion-item menuClose (click)="goToRegDoc()">
           <span>Documentações</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToRegReq()">
+        <ion-item menuClose (click)="goToRegReq()">
           <span>Requerimentos</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToRegTel()">
+        <ion-item menuClose (click)="goToRegTel()">
           <span>Contatos telefônicos</span>
         </ion-item>
 
@@ -129,7 +135,7 @@
 
       <!-- INICIO ENTIDADES -->
 
-      <ion-item  (click)="openEntityNav()" id="entity" [ngClass]="{'sub-list-item': this.entityNav === true}">
+      <ion-item (click)="openEntityNav()" id="entity" [ngClass]="{'sub-list-item': this.entityNav === true}">
         <div class='item-side'>
           <img src='assets/images/icon-networking.png' width=20>
           <span>Entidades</span>
@@ -139,19 +145,19 @@
 
       <ion-list *ngIf='this.entityNav === true' class='sub-list'>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Conheça o programa</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Pesquisa</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Sorteios</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Área da entidade</span>
         </ion-item>
 
@@ -168,34 +174,34 @@
       </ion-item>
 
       <ion-list *ngIf='this.portalNav === true' class='sub-list'>
-        <ion-item  menuClose (click)="goToSobreCodhab()">
+        <ion-item menuClose (click)="goToSobreCodhab()">
           <span>Sobre a CODHAB</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNews()">
+        <ion-item menuClose (click)="goToNews()">
           <span>Notícias</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToHabita()">
+        <ion-item menuClose (click)="goToHabita()">
           <span>Habita Brasília</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToConcursos()">
+        <ion-item menuClose (click)="goToConcursos()">
           <span>Concursos</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToAcoesUrbanas()">
+        <ion-item menuClose (click)="goToAcoesUrbanas()">
           <span>Ações Urbanas</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToMobilizacao()">
+        <ion-item menuClose (click)="goToMobilizacao()">
           <span>Mobilização Social</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToAcessoInformacao()">
+        <ion-item menuClose (click)="goToAcessoInformacao()">
           <span>Acesso à informação</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToOuvidoria()">
+        <ion-item menuClose (click)="goToOuvidoria()">
           <span>Ouvidoria</span>
         </ion-item>
 
@@ -215,18 +221,18 @@
           <span>Leitor QR</span>
         </ion-item>
 
-        <ion-item  menuClose (click)='qrCode.scanner()'>
+        <ion-item menuClose (click)='qrCode.scanner()'>
           <span>Pesquisa CPF/CNPJ</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Requerimento</span>
         </ion-item>
 
-        <ion-item  menuClose (click)="goToNavigationHome()">
+        <ion-item menuClose (click)="goToNavigationHome()">
           <span>Agendamento</span>
         </ion-item>
-        <ion-item  menuClose (click)="goToStations()">
+        <ion-item menuClose (click)="goToStations()">
           <span>Postos de Assistencia Técnica</span>
         </ion-item>
       </ion-list>
