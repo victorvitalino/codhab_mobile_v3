@@ -127,14 +127,18 @@
     background-color: #fddb65 !important;
   }
 
+  .avatar-active{
+    display: block!important;
+  }
+  .login-box{
+    display: none;
+  }
+
   .user-avatar {
     max-width: 125px;height: 125px;
     padding: .5em;
     height: 12vh;
-  }
-  // .item-custom-side .input-wrapper .label-md{
-  //   margin:0 8px 0 0!important;
-  // }
+  } 
   .item-block{
     min-height: 20px!important;
   }
@@ -224,11 +228,6 @@ ion-img {
   background: #ffcb08;
 }
 
-// Elton não sabe onde estava usando isso, se lembrar fazer mudança específica
-//.item-md{
-//   padding-left: 0 !important;
-// }
-
 .login-box{
   h3{
     font-size: 1.6rem;
@@ -249,13 +248,10 @@ ion-img {
     font-weight: 600;
 }
 
-// TEXTO
-
-// INPUT
-
 .input-border {
   border: 1px solid #e4e4e4 !important;
   box-shadow: 1px solid black !important;
   border-radius: 2px;
   height: 50px;
 }
+

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController } from 'ionic-angular';
+import { Nav, Platform, MenuController, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from '@ionic-native/onesignal';
@@ -28,8 +28,7 @@ export class MyApp {
   serviceNav        : boolean = false;
   latitude          : number;
   longitude         : number;
-  user              : boolean = false;
-
+  user_signed       : boolean = false;
   typewriter_text   : string;
   typewriter_display: string = "";
 
@@ -38,20 +37,21 @@ export class MyApp {
               public splashScreen: SplashScreen,
               public menuCtrl: MenuController,
               public oneSignal: OneSignal,
+              public loadingCtrl:LoadingController,
+              public service:LoginServiceProvider,
               private geolocation: Geolocation,
               private ga: GoogleAnalytics,
               public iab:InAppBrowser,
               public dataServiceProvider: DataServiceProvider,
               public loginService: LoginServiceProvider
             ) {
-
     this.initializeApp();
 
   
-
-    this.ga.startTrackerWithId('UA-96549234-1').then(() => {
-      this.ga.trackView('test');
-    }).catch(e => console.log('Error starting GoogleAnalytics', e));
+    // Ionic Analytics
+    // this.ga.startTrackerWithId('UA-96549234-1').then(() => {
+    //   this.ga.trackView('test');
+    // }).catch(e => console.log('Error starting GoogleAnalytics', e));
 
     platform.ready().then(() => {
 
@@ -78,10 +78,23 @@ export class MyApp {
       });
 
       this.oneSignal.endInit();
+
+
+      this.service.getData().then((resp) => {
+
+        if(resp.signed == true){
+          this.user_signed = true
+          this.nav.setRoot('NavigationPage')
+        }else{
+          this.user_signed = false
+        }
+      }).catch((error) => {
+          this.user_signed = false
+        })
+        
     });
 
   }
-
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -165,7 +178,6 @@ export class MyApp {
   }
 
   goToMorarBem(){
-    // this.iab.create()
     console.log(this.latitude)
   }
   goToSobreCodhab(){
@@ -238,7 +250,10 @@ export class MyApp {
     this.nav.push('CandidateProfileIndicationPage');
   }
   sign(){
-    this.user = true
-    console.log(this.user)
+    this.user_signed = true
+    console.log(this.user_signed)
+  }
+  goToWelcome(){
+    this.nav.setRoot('WelcomePage')
   }
 }

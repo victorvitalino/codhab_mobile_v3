@@ -35,6 +35,7 @@ export class WelcomeChatPage {
 
   ngOnInit() {
     this.typingCallback(this);
+
   }
 
   typingCallback(that) {
@@ -61,7 +62,8 @@ export class WelcomeChatPage {
         console.log(response)
       }else{
         this.loginService.signUser(this.cpf_cnpj,pass)
-        this.navCtrl.setRoot('NavigationPage')
+        window.location.reload();
+        // this.navCtrl.setRoot('NavigationPage')
       }
     })
 

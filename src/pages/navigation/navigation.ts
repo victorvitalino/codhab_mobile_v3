@@ -9,26 +9,25 @@ import { LoginServiceProvider } from '../../providers/login-service/login-servic
   templateUrl: 'navigation.html'
 })
 export class NavigationPage {
-  user:boolean = true;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+
+  public user_signed :boolean = true;
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
     public myApp: MyApp, 
     public service:LoginServiceProvider) {
   }
 
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-
-    // this.insert_data('01801850127',this.latitude,this.longitude);
-     this.service.getData().then((resp) => {
-       console.log(resp)
-     })
+    this.service.getData().then((resp) => {
+        if(resp.signed == true){
+          this.user_signed = true
+        }else{
+          this.user_signed = false
+        }
+      }).catch((error) => {
+          this.user_signed = false
+        })
   }
-  
-  // insert_data(cpf,latitude,longitude){
-  //   console.log('verificando insert: '+ latitude + ' ' + longitude)
-  //   this.service.insertData(cpf,latitude,longitude)
-  // }
   
   goToSchedule() {
     this.navCtrl.push('WelcomePage')

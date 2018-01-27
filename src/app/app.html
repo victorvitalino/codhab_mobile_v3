@@ -1,16 +1,16 @@
 <ion-menu [content]="content" id="menu-material">
   <ion-content>
-    <div class="menu-header" *ngIf="user">
+    <div [ngClass]="{'avatar-active':this.user_signed === true}" class="menu-header login-box" >
       <img class="user-avatar round" style="height:70px;max-width:70px;" [src]="chosenPicture || placeholder" onerror="this.src='assets/images/profile-1.jpg'">
       <h1 class="name">Frederico Maxmiliano</h1>
       <h3 class="situation">Habilitado - documentação aprovada</h3>
       <h3 class="position">Posição 15482º</h3>
     </div>
-    <div class="menu-header login-box" *ngIf="!user">
+    <div class="menu-header login-box" [ngClass]="{'avatar-active':this.user_signed !== true}">
       <h3>Parece que você não está logado. Por favor faça o acesso da sua conta
         <b>CODHAB</b>
       </h3>
-      <button ion-button color="primary" (click)="sign()">Acessar</button>
+      <button ion-button color="primary" (click)="goToWelcome()" menuClose>Acessar</button>
     </div>
     <ion-list no-lines>
 

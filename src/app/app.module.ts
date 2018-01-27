@@ -32,6 +32,7 @@ import { WelcomePageModule } from '../pages/welcome/welcome.module';
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { HabitationProvider } from '../providers/habitation/habitation';
 import { LoginServiceProvider } from '../providers/login-service/login-service';
+import { TextServiceProvider } from '../providers/text-service/text-service';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { LoginServiceProvider } from '../providers/login-service/login-service';
     DataServiceProvider,
     HabitationProvider,
     LoginServiceProvider,
+    TextServiceProvider,
   ]
 })
 export class AppModule {}

@@ -22,7 +22,7 @@ export class CandidateChatPage {
                 private chatService: ChatService,
                 private toastCtrl: ToastController,
                 private events: Events,) {
-          this.editorSwitch = true;
+        this.editorSwitch = true;
         // Get the navParams toUserId parameter
         this.toUser = {
             id: "210000198410281948",
@@ -58,7 +58,7 @@ export class CandidateChatPage {
     }
 
     displayChat(){
-      return this.editorSwitch;
+        return this.editorSwitch;
     }
 
 
@@ -116,7 +116,7 @@ export class CandidateChatPage {
 
     pushNewMsg(msg: ChatMessage) {
         const userId = this.user.id,
-              toUserId = this.toUser.id;
+        toUserId = this.toUser.id;
         // Verify user relationships
         if (msg.userId === userId && msg.toUserId === toUserId) {
             this.msgList.push(msg);
@@ -127,7 +127,7 @@ export class CandidateChatPage {
                 dismissOnPageChange: true
             });
             toast.present();
-          } else if (msg.toUserId === userId && msg.userId === toUserId) {
+        } else if (msg.toUserId === userId && msg.userId === toUserId) {
         
             this.editorSwitch = true;
             this.msgList.push(msg);
@@ -136,7 +136,7 @@ export class CandidateChatPage {
     }
 
     getMsgIndexById(id: string) {
-      
+    
         return this.msgList.findIndex(e => e.messageId === id)
     }
     
