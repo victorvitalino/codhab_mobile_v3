@@ -25,10 +25,13 @@ export class LoginServiceProvider {
     return this.nativeStorage.getItem('Signed')
   }
   getCheckCandidate(params) {
-    return this.http.get("/candidate/" + params + ".json?token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
+    return this.http.get("/pc/candidate/cadastres/" + params).map(res => res['data']);
+  }
+  getCheckEntity(params) {
+    return this.http.get("/pc/entity/cooperatives/" + params).map(res => res['data']);
   }
   getCandidate(cpf,pass){
-    return this.http.get("/auth?id=" + cpf + "&pass=" + pass +"&token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
+    return this.http.get("/pc/candidate/cadastres/" + cpf + "&pass=" + pass +"&token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
   }
   // getCheckCandidate(params) {
   //   return this.http.get("http://extranet.codhab.df.gov.br/candidato/cadastros/" + params + ".json?token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);

@@ -11,16 +11,21 @@ import { LoginServiceProvider } from '../../../providers/login-service/login-ser
 })
 export class WelcomeChatPage {
 
-  private cpf_cnpj: string;
-  private pass: string;
-  public signed: boolean = false;
+  private cpf_cnpj:     string;
+  private name:         string;
+  private pass:         string;
+  public  signed:       boolean = false;
 
   constructor(public navCtrl: NavController, 
     public loginService: LoginServiceProvider,
     public toastCtrl:ToastController,
     public navParams: NavParams) {
     this.cpf_cnpj = this.navParams.get('cpf_cnpj')
+  }
 
+  ngOnInit() {
+    this.cpf_cnpj = this.navParams.get('data')
+    this.name = this.navParams.get('name')
   }
 
   goToHome() {
@@ -29,17 +34,20 @@ export class WelcomeChatPage {
 
   sign(pass){
     this.cpf_cnpj = this.navParams.get('data')
-    this.loginService.getCandidate(this.cpf_cnpj,pass)
-    .subscribe((response) => {
-      if (response == 'Senha ou usuário inválido.'){
-        this.presentToast(response)
-        console.log(response)
-      }else{
-        this.loginService.signUser(this.cpf_cnpj,pass)
-        window.location.reload();
-        // this.navCtrl.setRoot('NavigationPage')
-      }
-    })
+    if(this.cpf_cnpj.length <= 11){
+      this.loginService.getCandidate(this.cpf_cnpj,pass)
+      .subscribe((response) => {
+        if (response == 'Senha ou usuário inválido.'){
+          this.presentToast(response)
+          console.log(response)
+        }else{
+          this.loginService.signUser(this.cpf_cnpj,pass)
+          window.location.reload();
+        }
+      })
+    }else{
+      console.log('entidade')
+    }
   }
 
   goToPass() {

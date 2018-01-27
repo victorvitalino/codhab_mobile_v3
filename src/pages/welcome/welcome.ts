@@ -88,6 +88,19 @@ export class WelcomePage {
     });
     loader.present();
     this.cpf_cnpj = this.unFormat(cpf_cnpj)
+    if(this.cpf_cnpj.length > 11){
+      this.loginService.getCheckEntity(this.cpf_cnpj)
+        .subscribe((response) => {
+          if (response == 'cnpj não encontrado.') {
+            loader.dismiss();
+            this.navCtrl.push('WelcomeNoUserPage')
+          } else {
+            loader.dismiss();
+            console.log(response)
+            this.navCtrl.push('WelcomeChatPage', { data: this.cpf_cnpj, name: response.fantasy_name });
+          }
+        });
+    }else{
       this.loginService.getCheckCandidate(this.cpf_cnpj)
       .subscribe((response) =>{
         if (response == 'cpf não encontrado.'){
@@ -95,10 +108,10 @@ export class WelcomePage {
           this.navCtrl.push('WelcomeNoUserPage')
         }else{
           loader.dismiss();
-          this.navCtrl.push('WelcomeChatPage', { data : this.cpf_cnpj });
+          this.navCtrl.push('WelcomeChatPage', { data : this.cpf_cnpj, name : response.name });
         }
       });
-    
+    }
   }
 
   goToHome() {

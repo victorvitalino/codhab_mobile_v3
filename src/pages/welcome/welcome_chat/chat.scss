@@ -1,4 +1,7 @@
 page-chat {
+    .user_name {
+        text-transform: capitalize!important;
+    }
     .content {
     text-align: 'text-center' !important;
     }
