@@ -2,18 +2,29 @@
   <div class='text-center'>
     <img src='assets/images/avatar-robot.png' width=30% class='text-center'>
   </div>
-  <div [innerHTML]="typewriter_display"></div>
-  <div *ngIf="enable_next_button" class='text-center'>
+  <div>
+    <br>
+    <h1 class='text-center first-animation'>
+      <b>Olá! Seja bem vindo(a) ao App da CODHAB. :) </b>
+    </h1>
+    <br>
+    <h4 class='text-center second-animation'>
+      <p>Sou seu assistente virtual e te ajudarei a achar o que você precisa.</p>
+      <p>Digite sua senha para acessar a área do condidato e clique em Prosseguir.</p>
+    </h4>
+
+  </div>
+  <div class='third-animation text-center'>
     <ion-item>
       <ion-input [(ngModel)]="pass" name="pass" type="password" placeholder="Insira aqui sua senha."></ion-input>
     </ion-item>
 
-      <div>
-        <br/>
-        <button ion-button color="primary" (click)="sign(pass)">Prosseguir</button>
-        <br/>
-        <br/>
-        <a (click)="goToPass()" class='mini-link'>RECUPERAR SENHA</a>
-      </div>
-      </div>
+    <div>
+      <br/>
+      <button ion-button color="primary" (click)="sign(pass)">Prosseguir</button>
+      <br/>
+      <br/>
+      <a (click)="goToPass()" class='mini-link'>RECUPERAR SENHA</a>
+    </div>
+  </div>
 </ion-content>
