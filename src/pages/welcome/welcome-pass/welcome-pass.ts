@@ -24,7 +24,7 @@ export class WelcomePassPage {
   }
   new_pass(pass,check_pass){
     if (pass == check_pass) {
-      this.navCtrl.setRoot('NavigationPage')
+      this.navCtrl.setRoot('WelcomePage')
     } else {
       console.log("Senhas não iguais")
     }

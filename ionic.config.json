@@ -29,6 +29,10 @@
     {
       "path": "/auth",
       "proxyUrl":"http://extranet.codhab.df.gov.br/candidato/authenticate"
+    },
+    {
+      "path": "/pc",
+      "proxyUrl":"http://127.0.0.1:3000"
     }
   ]
 }

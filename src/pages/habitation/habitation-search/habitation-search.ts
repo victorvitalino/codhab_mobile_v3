@@ -10,6 +10,7 @@ import { HabitationProvider } from '../../../providers/habitation/habitation';
 })
 export class HabitationSearchPage {
 candidate: any;
+entity: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public data:HabitationProvider, public load:LoadingController) {
   }
 
@@ -18,12 +19,20 @@ candidate: any;
       content: "Pesquisando..."
     });
     loader.present();
-    this.data.getCandidate(value)
-      .subscribe((response) => {
-        this.candidate = response;
-        console.log(this.candidate);
+    if(value <= 11){
+      this.data.getCandidate(value)
+        .subscribe((response) => {
+          this.candidate = response;
+          console.log(this.candidate);
+          loader.dismiss();
+        });
+    }else{
+      this.data.getEntity(value)
+      .subscribe((response)=>{
+        this.entity = response;
+        console.log(this.entity)
         loader.dismiss();
-        // console.log("fdp" + this.candidate.basic_information.name)
-      });
+      })
+    }
   }
 }

@@ -22,38 +22,45 @@
       <b>DADOS PESSOAIS</b>
     </ion-item-divider>
     <ion-item>
-      <b>Nome: </b>{{candidate.basic_information.name}}</ion-item>
+      <b>Nome: </b>{{candidate.name}}</ion-item>
     <ion-item>
-      <strong>Estado Civil: </strong>{{candidate.basic_information.civil_state}}
+      <strong>Estado Civil: </strong>{{candidate.civil_state}}
       <br/>
     </ion-item>
     <ion-item>
-      <strong>Chegada no DF: </strong>{{candidate.basic_information.arrival_df }}
+      <strong>Chegada no DF: </strong>{{candidate.arrival_df }}
       <br/>
     </ion-item>
     <ion-item>
-      <strong>Nascido em: </strong>{{candidate.basic_information.born}}
+      <strong>Nascido em: </strong>{{candidate.born}}
       <br/>
     </ion-item>
     <ion-item>
       <strong>Condição Especial: </strong>
-      <span class="badge badge-positive badge_search">{{candidate.basic_information.special_condition}}</span>
+      <span class="badge badge-positive badge_search">{{candidate.special_condition}}</span>
       <br/>
     </ion-item>
     <ion-item>
-      <strong>CID: </strong>{{candidate.basic_information.cid}}
+      <strong>CID: </strong>{{candidate.cid}}
       <br/>
     </ion-item>
     <ion-item>
-      <strong>NIS: </strong>{{candidate.basic_information.nis}}
+      <strong>NIS: </strong>{{candidate.nis}}
       <br/>
     </ion-item>
-
+<!-- 
     <ion-item-divider color="light">
       <b>Indicado ao empreendimento</b>
     </ion-item-divider>
     <ion-item  *ngIf="!!!candidate.enterprise_cadastre.length">
       Sem Indicação à Empreendimento
+    </ion-item> -->
+
+    <ion-item-divider color="light">
+      <b>Convocações</b>
+    </ion-item-divider>
+    <ion-item  *ngIf="!!!candidate.convocation">
+      Sem Convocações no momento
     </ion-item>
     <ion-item *ngFor="let i of candidate.enterprise_cadastre">
       <strong>Empreendimento: </strong>{{i.enterprise_name}}
@@ -71,6 +78,15 @@
     <ion-item-divider color="light">
       <b>Situação do Candidato</b>
     </ion-item-divider>
+    <ion-item>
+      <b>Situação Atual: </b>{{candidate.current_situation}}
+    </ion-item>
+    <ion-item>
+      <b>Data da Situação: </b>{{candidate.current_situation_date}}
+    </ion-item>
+    <ion-item-divider color="light">
+      <b>Listas</b>
+    </ion-item-divider>
     <ion-item *ngFor="let i of candidate.lists">
       <strong>Lista: </strong>{{i.name}}
       <br/>
@@ -83,8 +99,39 @@
       <strong>Faixa de renda: </strong>Faixa {{i.zone}}
       <br/>
       <ion-item color="energized">
-        <strong>{{candidate.basic_information.situation}}</strong>
+        <strong>{{candidate.situation}}</strong>
       </ion-item>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group *ngIf="entity !== undefined"> 
+    <ion-item-divider color="light">
+      <b>DADOS PESSOAIS</b>
+    </ion-item-divider>
+    <ion-item>
+      <b>Nome: </b>{{entity.name}}
+    </ion-item>
+    <ion-item>
+      <b>CNPJ: </b>{{entity.cnpj}}
+    </ion-item>
+    <ion-item>
+      <b>Nome Fantasia: </b>{{entity.fantasy_name}}
+    </ion-item>
+    <ion-item>
+      <b>Email: </b>{{entity.email}}
+    </ion-item>
+
+    <ng-container *ngIf="entity.status; else elseTemplate">
+      <ion-item>
+        <b>Status: </b> Ativa
+      </ion-item>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <ion-item>
+        <b>Status: </b> Desativa
+      </ion-item>
+    </ng-template>
+    <ion-item>
+      <b>Situação: </b>{{entity.situation}}
     </ion-item>
   </ion-item-group>
 </ion-content>

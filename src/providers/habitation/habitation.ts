@@ -18,7 +18,13 @@ export class HabitationProvider {
   // }
 
   // Testar Web
+  // getCandidate(params){
+  //   return this.http.get("/candidate/"+params+".json?token=eed6a8780692be1675b1bd0f386ca8b0").map((response:Response) => response)
+  // }
   getCandidate(params){
-    return this.http.get("/candidate/"+params+".json?token=eed6a8780692be1675b1bd0f386ca8b0").map((response:Response) => response)
+    return this.http.get("pc/candidate/cadastres/"+params).map((response:Response) => response['data'])
+  }
+  getEntity(params){
+    return this.http.get("pc/entity/cooperatives/" + params).map((response: Response) => response['data'])
   }
 }

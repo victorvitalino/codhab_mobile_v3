@@ -2,11 +2,51 @@
   <div class='text-center'>
     <img src='assets/images/avatar-robot.png' width=30% class='text-center'>
   </div>
-  <div [innerHTML]="typewriter_display"></div>
 
+  <h4 class="text-center first-animation">
+    <p>Olá!!! Não identifiquei seu CPF ou CNPJ nos cadastros da CODHAB. Estou direcionando você para saber mais sobre a CODHAB
+      e Programa Habitacionais de Interesse Social.</p>
+  </h4>
+  <h4 class="text-center second-animation">
+    <p>Você quer saber sobre: Habita Brasília, Regularização, Entidades, Assistência Técnica, Validação de Documentos ou apenas
+      quer explorar mais opções?
+    </p>
+  </h4>
 
-    <div class='text-center' *ngIf="enable_next_button">
-      <br/>
-      <button ion-button color="primary" (click)="goToNavigation()">Entendi. Vamos lá!</button>
-    </div>
+  <div class="text-center third-animation">
+    <br/>
+    <ion-row>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-cel.png" (click)='goToNavigation()'></ion-img>
+        <p class='caption-icon'>Continuar no app</p>
+
+      </ion-col>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-house.png" (click)='goToProfile()'></ion-img>
+        <p class='caption-icon'>Habita Brasília</p>
+
+      </ion-col>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-certified.png"></ion-img>
+        <p class='caption-icon'>Regularização</p>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-networking.png" (click)='goToNotification()'></ion-img>
+        <p class='caption-icon'>Entidades</p>
+
+      </ion-col>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-sketch.png" (click)='goToProfile()'></ion-img>
+        <p class='caption-icon'>Assistência Técnica</p>
+
+      </ion-col>
+      <ion-col col-4>
+        <ion-img width="50" height="50" src="assets/images/icon-signing.png"></ion-img>
+        <p class='caption-icon'>Validação de Documentos</p>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>
