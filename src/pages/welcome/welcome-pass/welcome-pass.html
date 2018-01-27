@@ -2,9 +2,11 @@
   <div class='text-center'>
     <img src='assets/images/avatar-robot.png' width=30% class='text-center'>
   </div>
-  <div [innerHTML]="typewriter_display"></div>
-
-  <div *ngIf="enable_next_button">
+  <h4 class="first-animation">
+    <p>Sua senha está desatuaizada, informe uma nova senha com 6 números</p>
+    <p>Logo depois repita a mesma senha.</p>
+  </h4>
+  <div class="second-animation text-center">
     <ion-item>
       <ion-input [(ngModel)]="pass" name="pass" type="number" placeholder="Insira aqui sua nova senha."></ion-input>
     </ion-item>
@@ -13,7 +15,7 @@
       <ion-input [(ngModel)]="pass_check" name="pass_check" type="number" placeholder="Repita sua senha."></ion-input>
     </ion-item>
 
-    <div class='text-center'>
+    <div class="third-animation text-center">
       <br/>
       <button ion-button color="primary" (click)="new_pass(pass,pass_check)">Prosseguir</button>
       <br/>
