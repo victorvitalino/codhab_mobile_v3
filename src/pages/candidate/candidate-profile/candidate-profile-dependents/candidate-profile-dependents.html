@@ -10,21 +10,19 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
-
 <ion-content>
   <div *ngFor="let candidate of profile_user">
     <ng-container *ngIf="candidate.dependents.length > 0; else elseTemplate">
-      <ion-list>
-        <ion-item-divider>Brisolo da Silva</ion-item-divider>
+      <ion-list *ngFor="let dependent of candidate.dependents">
+        <ion-item-divider>{{dependent.name}}</ion-item-divider>
         <ion-item>
-          <b>CPF: </b>{{candidate.name}}</ion-item>
+          <b>CPF: </b>{{dependent.cpf}}</ion-item>
         <ion-item>
-          <b>RG: </b>2.537.185</ion-item>
+          <b>RG: </b>{{dependent.rg}}</ion-item>
         <ion-item>
-          <b>Nascimento: </b>26/01/1987</ion-item>
+          <b>Nascimento: </b>{{dependent.born}}</ion-item>
         <ion-item>
-          <b>Sexo: </b>Masculino</ion-item>
+          <b>Sexo: </b>{{dependent.gender}}</ion-item>
       </ion-list>
     </ng-container>
       <ng-template #elseTemplate>

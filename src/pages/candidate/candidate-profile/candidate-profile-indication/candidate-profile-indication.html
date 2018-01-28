@@ -8,16 +8,24 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
-
 <ion-content>
-  <ion-list>
-    <ion-item-divider>GAMA - Arboreto</ion-item-divider>
-    <ion-item>
-      <b>Data da indicação </b>26/01/1987</ion-item>
-    <ion-item>
-      <b>Situação da indicação: </b>Inativa</ion-item>
-    <ion-item>
-      <b>Data de Inativação: </b>26/01/1987</ion-item>
-  </ion-list>
+  <div *ngFor="let candidate of profile_user">
+    <ng-container *ngIf="candidate.indications.length > 0; else elseTemplate">
+      <ion-list *ngFor="let indication of candidate.indications">
+        <ion-item-divider>{{indication.name}}</ion-item-divider>
+        <ion-item>
+          <b>CPF: </b>{{indication.active_data}}</ion-item>
+        <ion-item>
+          <b>RG: </b>{{indication.situation}}</ion-item>
+        <ion-item>
+          <b>Nascimento: </b>{{indication.inactive_data}}</ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <ion-list>
+        <ion-item-divider>Nenhuma ocorrência encontrada</ion-item-divider>
+      </ion-list>
+    </ng-template>
+  </div>
 </ion-content>
+
