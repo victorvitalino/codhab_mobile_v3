@@ -13,15 +13,24 @@
 
 
 <ion-content>
-  <ion-list>
-    <ion-item-divider>Brisolo da Silva</ion-item-divider>
-    <ion-item>
-      <b>CPF: </b>018.018.501-27</ion-item>
-    <ion-item>
-      <b>RG: </b>2.537.185</ion-item>
-    <ion-item>
-      <b>Nascimento: </b>26/01/1987</ion-item>
-    <ion-item>
-      <b>Sexo: </b>Masculino</ion-item>
-  </ion-list>
+  <div *ngFor="let candidate of profile_user">
+    <ng-container *ngIf="candidate.dependents.length > 0; else elseTemplate">
+      <ion-list>
+        <ion-item-divider>Brisolo da Silva</ion-item-divider>
+        <ion-item>
+          <b>CPF: </b>{{candidate.name}}</ion-item>
+        <ion-item>
+          <b>RG: </b>2.537.185</ion-item>
+        <ion-item>
+          <b>Nascimento: </b>26/01/1987</ion-item>
+        <ion-item>
+          <b>Sexo: </b>Masculino</ion-item>
+      </ion-list>
+    </ng-container>
+      <ng-template #elseTemplate>
+        <ion-list>
+          <ion-item-divider>Nenhuma ocorrência encontrada</ion-item-divider>
+        </ion-list>
+      </ng-template>
+  </div>
 </ion-content>
