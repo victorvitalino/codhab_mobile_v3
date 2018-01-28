@@ -35,6 +35,8 @@ import { HabitationProvider } from '../providers/habitation/habitation';
 import { LoginServiceProvider } from '../providers/login-service/login-service';
 import { TextServiceProvider } from '../providers/text-service/text-service';
 import { AuthProvider } from '../providers/auth/auth';
+import { SchedulesProvider } from '../providers/schedules/schedules';
+import { AttendanceProvider } from '../providers/attendance/attendance';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,8 @@ import { AuthProvider } from '../providers/auth/auth';
     LoginServiceProvider,
     TextServiceProvider,
     AuthProvider,
+    SchedulesProvider,
+    AttendanceProvider,
   ]
 })
 export class AppModule {}

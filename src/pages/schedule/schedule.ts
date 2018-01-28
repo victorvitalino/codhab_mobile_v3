@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the SchedulePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { SchedulesProvider } from '../../providers/schedules/schedules';
 
 @IonicPage()
 @Component({
@@ -15,11 +9,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SchedulePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+  private service:SchedulesProvider) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SchedulePage');
+  ngOnInit() {
+    this.service.getSchedules()
   }
-
 }

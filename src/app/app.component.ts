@@ -255,6 +255,9 @@ export class MyApp {
   goToSchedules() {
     this.nav.push('CandidateSchedulesPage');
   }
+  goToSchedule(){
+    this.nav.push('SchedulePage');
+  }
   goToIndication() {
     this.nav.push('CandidateProfileIndicationPage');
   }
