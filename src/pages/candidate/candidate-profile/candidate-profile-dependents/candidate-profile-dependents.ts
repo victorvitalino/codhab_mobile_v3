@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
+import { LoginServiceProvider } from '../../../../providers/login-service/login-service';
 
-/**
- * Generated class for the CandidateProfileDependentsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +9,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'candidate-profile-dependents.html',
 })
 export class CandidateProfileDependentsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private profile_user : object;
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+  private service:LoginServiceProvider,
+  private load:LoadingController) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CandidateProfileDependentsPage');
-  }
+  ngOnInit() {
+    let loader = this.load.create({
+      content: "Carregando Dados",
+      spinner: 'crescent'
+    });
+    loader.present();
+    this.service.getData().then((response) => {
+      this.service.getCheckCandidate(response.cpf).subscribe((resp) => {
+        this.profile_user = Array.of(resp);
+        console.log(this.profile_user)
+        loader.dismiss();
+      })
+    });
 
+  }
 }

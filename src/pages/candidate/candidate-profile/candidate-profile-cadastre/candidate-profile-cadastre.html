@@ -13,25 +13,25 @@
 
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngFor="let candidate of profile_user">
     <ion-item-divider>Dados Básicos</ion-item-divider>
-    <ion-item><b>Nome: </b>Maria de Jesus da Silva</ion-item>
-    <ion-item><b>CPF: </b>018.018.501-27</ion-item>
-    <ion-item><b>RG: </b>2.537.185</ion-item>
-    <ion-item><b>Nascimento: </b>26/01/1987</ion-item>
-    <ion-item><b>Sexo: </b>Masculino</ion-item>
-    <ion-item><b>Chegada no DF: </b>26/01/1987</ion-item>
-    <ion-item><b>Nome da Mãe: </b>Cráudia de Jesus da Silva</ion-item>
-    <ion-item><b>Condição Especial: </b>Idoso(a)</ion-item>
-    <ion-item><b>NIS: </b>1231233321</ion-item>
-    <ion-item><b>Renda do Titular: </b>R$ 3600</ion-item>
-    <ion-item><b>Renda Familiar: </b>R$ 3600</ion-item>
+    <ion-item><b>Nome: </b>{{candidate.name}}</ion-item>
+    <ion-item><b>CPF: </b>{{candidate.cpf}}</ion-item>
+    <ion-item><b>RG: </b>{{candidate.rg}}</ion-item>
+    <ion-item><b>Nascimento: </b>{{candidate.born}}</ion-item>
+    <ion-item><b>Sexo: </b>{{candidate.gender}}</ion-item>
+    <ion-item><b>Chegada no DF: </b>{{candidate.arrival_df}}</ion-item>
+    <ion-item><b>Nome da Mãe: </b>{{candidate.mother_name}}</ion-item>
+    <ion-item><b>Condição Especial: </b>{{candidate.special_condition_type}}</ion-item>
+    <ion-item><b>NIS: </b>{{candidate.nis}}</ion-item>
+    <ion-item><b>Renda do Titular: </b>R$ {{candidate.personal_income}}</ion-item>
+    <ion-item><b>Renda Familiar: </b>R$ {{candidate.family_income}}</ion-item>
     <ion-item-divider>Dados de Contato</ion-item-divider>
-    <ion-item><b>Cidade: </b>Samambaia</ion-item>
-    <ion-item><b>Endereço: </b>QR 112 CONJUNTO 5/16</ion-item>
-    <ion-item><b>Email: </b>maria.jesus@gmail.com</ion-item>
-    <ion-item><b>Telefone: </b>(61)12345678</ion-item>
-    <ion-item><b>Telefone Opcional: </b>(61)12345678</ion-item>
-    <ion-item><b>Celular: </b>(61)12345678</ion-item>
+    <ion-item><b>Cidade: </b>{{candidate.city}}</ion-item>
+    <ion-item><b>Endereço: </b>{{candidate.address}}</ion-item>
+    <ion-item><b>Email: </b>{{candidate.email}}</ion-item>
+    <ion-item><b>Telefone: </b>{{candidate.phone}}</ion-item>
+    <ion-item><b>Telefone Opcional: </b>{{candidate.phone}}</ion-item>
+    <ion-item><b>Celular: </b>{{candidate.celphone}}</ion-item>
   </ion-list>
 </ion-content>

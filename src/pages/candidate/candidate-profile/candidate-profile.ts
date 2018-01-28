@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { LoginServiceProvider } from '../../../providers/login-service/login-service';
 
 
 @IonicPage()
@@ -8,10 +9,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'candidate-profile.html',
 })
 export class CandidateProfilePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  profile_user: any;
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public load:LoadingController,
+    public service: LoginServiceProvider) {
   }
 
+  ngOnInit() {
+    let loader = this.load.create({
+      content: "Carregando Dados",
+      spinner: 'crescent'
+    });
+    loader.present();
+      this.service.getData().then((response)=>{
+        this.service.getCheckCandidate(response.cpf).subscribe((resp) =>{
+          this.profile_user = Array.of(resp);
+          console.log(this.profile_user)
+          loader.dismiss();
+        })
+      });
+      
+  }
 
   goToCadastre(){
     this.navCtrl.push('CandidateProfileCadastrePage');

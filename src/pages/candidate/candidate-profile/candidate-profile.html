@@ -1,50 +1,45 @@
 <ion-header>
   <ion-navbar>
-
     <ion-title>
       <h2>Meus Dados</h2>
     </ion-title>
   </ion-navbar>
 </ion-header>
-
-
-<ion-content>
-  <div class="image-profile-box">
-    <img src="assets/images/profile-1.jpg" />
+<ion-content >
+  <div *ngFor="let candidate of profile_user">
+    <div class="image-profile-box">
+      <img src="assets/images/profile-1.jpg" />
+    </div>
+    <div padding>
+      <h2 class="user-name">
+        <b>
+          {{candidate.name}}
+        </b>
+      </h2>
+      <ion-row>
+        <ion-col class="profile-col" col-4>
+          <h6 class="title">Lista</h6>
+          <h3 class="value">{{candidate.program_name}}</h3>
+        </ion-col>
+        <ion-col class="profile-col" col-4>
+          <h6 class="title">Faixa</h6>
+          <h3 class="value">3</h3>
+        </ion-col>
+        <ion-col class="profile-col" col-4>
+          <h6 class="title">Posição</h6>
+          <h3 class="value">{{candidate.position}}</h3>
+        </ion-col>
+      </ion-row>
+      <ion-col class="profile-col">
+        <h6 class="title">Pontuação</h6>
+        <h3 class="value">{{candidate.pontuation}}</h3>
+      </ion-col>
+      <ion-badge class="situation"color="royal">{{candidate.current_situation}}</ion-badge>
+    </div>
   </div>
-
-  <div padding>
-    <h2 class="user-name">
-      <b>
-        Maria de Jesus da Silva
-      </b>
-    </h2>
-    <ion-row>
-      <ion-col class="profile-col" col-4>
-        <h6 class="title">Lista</h6>
-        <h3 class="value">RII</h3>
-
-      </ion-col>
-      <ion-col class="profile-col" col-4>
-        <h6 class="title">Faixa</h6>
-        <h3 class="value">3</h3>
-      </ion-col>
-      <ion-col class="profile-col" col-4>
-        <h6 class="title">Posição</h6>
-        <h3 class="value">789656º</h3>
-      </ion-col>
-    </ion-row>
-    <ion-col class="profile-col">
-    <h6 class="title">Pontuação</h6>
-<h3 class="value">7676.4254542015</h3>
-
-    </ion-col>
-
-    <ion-badge color="royal">HABILITADO - DOCUMENTAÇÃO APROVADA</ion-badge>
-  </div>
-  <div class="profile-icon-area" padding>
-    <ion-row>
-      <ion-col col-4 (click)='goToCadastre()'>
+    <div class="profile-icon-area" padding>
+      <ion-row>
+        <ion-col col-4 (click)='goToCadastre()'>
         <ion-img width="50" height="50" src="assets/images/icon-profile.png" ></ion-img>
         <p class='caption-icon'>Meu Cadastro</p>
       </ion-col>

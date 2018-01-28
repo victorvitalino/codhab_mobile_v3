@@ -29,6 +29,8 @@ export class MyApp {
   latitude          : number;
   longitude         : number;
   user_signed       : boolean = false;
+  user_name         : string;
+  user_situation    : string;
   typewriter_text   : string;
   typewriter_display: string = "";
 
@@ -42,12 +44,13 @@ export class MyApp {
               private geolocation: Geolocation,
               private ga: GoogleAnalytics,
               public iab:InAppBrowser,
-              public dataServiceProvider: DataServiceProvider,
-              public loginService: LoginServiceProvider
+              public dataServiceProvider: DataServiceProvider
             ) {
     this.initializeApp();
+    this.getUserSigned();
 
-  
+
+
     // Ionic Analytics
     // this.ga.startTrackerWithId('UA-96549234-1').then(() => {
     //   this.ga.trackView('test');
@@ -79,18 +82,6 @@ export class MyApp {
 
       this.oneSignal.endInit();
 
-
-      this.service.getData().then((resp) => {
-
-        if(resp.signed == true){
-          this.user_signed = true
-          this.nav.setRoot('NavigationPage')
-        }else{
-          this.user_signed = false
-        }
-      }).catch((error) => {
-          this.user_signed = false
-        })
         
     });
 
@@ -101,6 +92,24 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+
+  getUserSigned(){
+    this.service.getData().then((resp) => {
+      this.service.getCheckCandidate(resp.cpf).subscribe((response)=>{
+        this.user_name = response.name;
+        this.user_situation = response.current_situation;
+      })
+      if (resp.signed == true) {
+        this.user_signed = true
+        this.nav.setRoot('NavigationPage')
+      } else {
+        this.user_signed = false
+      }
+    }).catch((error) => {
+      this.user_signed = false
+    })
   }
 
   goToNavigationHome() {

@@ -35,18 +35,28 @@ export class WelcomeChatPage {
   sign(pass){
     this.cpf_cnpj = this.navParams.get('data')
     if(this.cpf_cnpj.length <= 11){
-      this.loginService.getCandidate(this.cpf_cnpj,pass)
+      this.loginService.loginUser(this.cpf_cnpj,pass)
       .subscribe((response) => {
-        if (response == 'Senha ou usuário inválido.'){
-          this.presentToast(response)
-          console.log(response)
+        let status = response['status']
+        if (status == 401){
+          this.presentToast(response['data']['errors']['code'])
         }else{
-          this.loginService.signUser(this.cpf_cnpj,pass)
+          this.loginService.signUser(this.cpf_cnpj,response['data']['auth_token'])
           window.location.reload();
         }
       })
     }else{
-      console.log('entidade')
+      this.loginService.loginEntity(this.cpf_cnpj, pass)
+        .subscribe((response) => {
+          console.log(response)
+          let status = response['status']
+          if (status == 401) {
+            this.presentToast(response['data']['errors']['code'])
+          } else {
+            this.loginService.signUser(this.cpf_cnpj, response['data']['auth_token'])
+            window.location.reload();
+          }
+        })
     }
   }
 
@@ -57,7 +67,7 @@ export class WelcomeChatPage {
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 6000,
+      duration: 3000,
       position:'middle'
     });
     toast.onDidDismiss(() => {

@@ -3,26 +3,49 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http, Response } from "@angular/http";
 import { NavController, NavParams } from 'ionic-angular';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 
 @Injectable()
 export class LoginServiceProvider {
 
-  constructor(public http: HttpClient, private nativeStorage:NativeStorage, ) {
+  constructor(public http: HttpClient, private storage:Storage, ) {
     console.log('Hello LoginServiceProvider Provider');
   }
 
-  signUser(cpf,pass){
-    return this.nativeStorage.setItem('Signed', { cpf: cpf , pass:pass, signed:true})
+  signUser(cpf,auth){
+    return this.storage.set('Signed', { cpf: cpf , auth:auth, signed:true})
       .then( () => console.log('Sucesso'),
       error => console.error('Error storing item', error)
       );
       
   }
+
+  signEntity(cnpj,auth){
+    return this.storage.set('Signed',{cnpj:cnpj, auth:auth, signed:true})
+    .then (() => console.log('Entidade Sucesso'),
+    error => console.error('Erro', error)
+    );
+  }
+
+  loginUser(cpf,pass) {
+    return this.http.post("/pc/candidate/sessions",{
+      cpf: cpf,
+      password:pass
+    }).map(res => res);
+
+  }
+
+  loginEntity(cnpj,pass){
+    return this.http.post("/pc/entity/sessions",{
+      cnpj: cnpj,
+      pass:pass
+    }).map(res => res)
+  }
+
   getData(){
-    return this.nativeStorage.getItem('Signed')
+    return this.storage.get('Signed')
   }
   getCheckCandidate(params) {
     return this.http.get("/pc/candidate/cadastres/" + params).map(res => res['data']);
@@ -30,14 +53,5 @@ export class LoginServiceProvider {
   getCheckEntity(params) {
     return this.http.get("/pc/entity/cooperatives/" + params).map(res => res['data']);
   }
-  getCandidate(cpf,pass){
-    return this.http.get("/pc/candidate/cadastres/" + cpf + "&pass=" + pass +"&token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
-  }
-  // getCheckCandidate(params) {
-  //   return this.http.get("http://extranet.codhab.df.gov.br/candidato/cadastros/" + params + ".json?token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
-  // }
-  // getCandidate(cpf,pass){
-  //   return this.http.get("http://extranet.codhab.df.gov.br/candidato/authenticate?id=" + cpf + "&pass=" + pass +"&token=eed6a8780692be1675b1bd0f386ca8b0").map(res => res['data']);
-  // }
 
 }

@@ -2,9 +2,8 @@
   <ion-content>
     <div [ngClass]="{'avatar-active':this.user_signed === true}" class="menu-header login-box" >
       <img class="user-avatar round" style="height:70px;max-width:70px;" [src]="chosenPicture || placeholder" onerror="this.src='assets/images/profile-1.jpg'">
-      <h1 class="name">Frederico Maxmiliano</h1>
-      <h3 class="situation">Habilitado - documentação aprovada</h3>
-      <h3 class="position">Posição 15482º</h3>
+      <h2 class="name">{{this.user_name}}</h2>
+      <h3 class="situation">{{this.user_situation}}</h3>
     </div>
     <div class="menu-header login-box" [ngClass]="{'avatar-active':this.user_signed !== true}">
       <h3>Parece que você não está logado. Por favor faça o acesso da sua conta
@@ -24,7 +23,7 @@
 
       <!-- INICIO MEU CADASTRO -->
 
-      <ion-item *ngIf="user" (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
+      <ion-item *ngIf="this.user_signed" (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
         <div class='item-side'>
           <img src='assets/images/icon-smartphone.png' width=20>
           <span>Meu cadastro</span>

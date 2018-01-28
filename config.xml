@@ -107,6 +107,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="CODHAB precisa de sua localização" />
     </plugin>
-    <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
     <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
 </widget>

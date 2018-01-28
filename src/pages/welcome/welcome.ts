@@ -80,8 +80,6 @@ export class WelcomePage {
 
 
 //Navegação
-
-
   startChat(cpf_cnpj) {
     let loader = this.load.create({
       content: "Pesquisando..."
