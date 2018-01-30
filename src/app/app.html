@@ -1,11 +1,6 @@
-<ion-menu [content]="content" id="menu-material">
+<ion-menu [content]="content" id="menu1" class="menu-material" enabled="true">
   <ion-content>
-    <div [ngClass]="{'avatar-active':this.user_signed === true}" class="menu-header login-box" >
-      <img class="user-avatar round" style="height:70px;max-width:70px;" [src]="chosenPicture || placeholder" onerror="this.src='assets/images/profile-1.jpg'">
-      <h2 class="name">{{this.user_name}}</h2>
-      <h3 class="situation">{{this.user_situation}}</h3>
-    </div>
-    <div class="menu-header login-box" [ngClass]="{'avatar-active':this.user_signed !== true}">
+    <div class="menu-header login-box">
       <h3>Parece que você não está logado. Por favor faça o acesso da sua conta
         <b>CODHAB</b>
       </h3>
@@ -24,6 +19,239 @@
       <!-- INICIO MEU CADASTRO -->
 
       <ion-item *ngIf="this.user_signed" (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-smartphone.png' width=20>
+          <span>Meu cadastro</span>
+        </div>
+      </ion-item>
+      <ion-list *ngIf='this.cadastreNav === true' class='sub-list'>
+
+        <ion-item menuClose (click)="gotToCandidate()">
+          <span>Área do candidato</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNotification()">
+          <span>Notificações</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToProfile()">
+          <span>Meus dados</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToUpdates()">
+          <span>Atualizações</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToChat()">
+          <span>Conversas</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToRequirements()">
+          <span>Requerimentos</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToSchedules()">
+          <span>Agendamentos</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToIndication()">
+          <span>Indicação à empreendimento</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Pendências</span>
+        </ion-item>
+      </ion-list>
+
+      <!-- FIM CADASTRO -->
+
+      <!-- INICIO HABITACAO -->
+
+      <ion-item (click)="openHabitationNav()" id="habitation" [ngClass]="{'sub-list-item': this.habitationNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-house.png' width=20>
+          <span>Habitação</span>
+        </div>
+      </ion-item>
+
+      <ion-list *ngIf='this.habitationNav === true' class='sub-list'>
+
+        <ion-item menuClose (click)="goToMorarBem()">
+          <span>Morar Bem</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Aluguel Legal</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Portas Abertas</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Projeto na Medida</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Lote Legal</span>
+        </ion-item>
+
+      </ion-list>
+
+      <!-- FIM HABITACAO -->
+
+      <!-- INICIO REGULARIZACAO -->
+
+      <ion-item (click)="openRegularizationNav()" id="regularization" [ngClass]="{'sub-list-item': this.regularizationNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-certified.png' width=20>
+          <span>Regularização</span>
+        </div>
+      </ion-item>
+      <ion-list *ngIf='this.regularizationNav === true' class='sub-list'>
+
+        <ion-item menuClose (click)="goToRegConheca()">
+          <span>Conheça o programa</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Agendamentos</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToRegDoc()">
+          <span>Documentações</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToRegReq()">
+          <span>Requerimentos</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToRegTel()">
+          <span>Contatos telefônicos</span>
+        </ion-item>
+
+      </ion-list>
+
+      <!-- FIM REGULARIZACAO -->
+
+      <!-- INICIO ENTIDADES -->
+
+      <ion-item (click)="openEntityNav()" id="entity" [ngClass]="{'sub-list-item': this.entityNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-networking.png' width=20>
+          <span>Entidades</span>
+        </div>
+      </ion-item>
+
+
+      <ion-list *ngIf='this.entityNav === true' class='sub-list'>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Conheça o programa</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Pesquisa</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Sorteios</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Área da entidade</span>
+        </ion-item>
+
+      </ion-list>
+
+      <!-- FIM ENTIDADE -->
+      <!-- INICIO ENTIDADE -->
+
+      <ion-item (click)="openPortalNav()" id="portal" [ngClass]="{'sub-list-item': this.portalNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-computer.png' width=20>
+          <span>Portal</span>
+        </div>
+      </ion-item>
+
+      <ion-list *ngIf='this.portalNav === true' class='sub-list'>
+        <ion-item menuClose (click)="goToSobreCodhab()">
+          <span>Sobre a CODHAB</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNews()">
+          <span>Notícias</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToHabita()">
+          <span>Habita Brasília</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToConcursos()">
+          <span>Concursos</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToAcoesUrbanas()">
+          <span>Ações Urbanas</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToMobilizacao()">
+          <span>Mobilização Social</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToAcessoInformacao()">
+          <span>Acesso à informação</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToOuvidoria()">
+          <span>Ouvidoria</span>
+        </ion-item>
+
+      </ion-list>
+
+      <!-- FIM ENTIDADE -->
+      <ion-item (click)="openServiceNav()" id="portal" [ngClass]="{'sub-list-item': this.serviceNav === true}">
+        <div class='item-side'>
+          <img src='assets/images/icon-settings.png' width=20>
+          <span>Serviços</span>
+        </div>
+      </ion-item>
+
+      <ion-list *ngIf='this.serviceNav === true' class='sub-list'>
+
+        <ion-item (click)="goToQrCode()" menuClose>
+          <span>Leitor QR</span>
+        </ion-item>
+
+        <ion-item menuClose (click)='qrCode.scanner()'>
+          <span>Pesquisa CPF/CNPJ</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToNavigationHome()">
+          <span>Requerimento</span>
+        </ion-item>
+
+        <ion-item menuClose (click)="goToSchedule()">
+          <span>Agendamento</span>
+        </ion-item>
+        <ion-item menuClose (click)="goToStations()">
+          <span>Postos de Assistencia Técnica</span>
+        </ion-item>
+      </ion-list>
+      <!-- Fim Publico -->
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-menu [content]="content" id="menu2" class="menu-material" enabled="false">
+  <ion-content> 
+    <div class="menu-header login-box" >
+      <img class="user-avatar round" style="height:70px;max-width:70px;" [src]="chosenPicture || placeholder" onerror="this.src='assets/images/profile-1.jpg'"/>
+      <h2 class="name">{{this.user_name}}</h2>
+      <h3 class="situation">{{this.user_situation}}</h3>
+    </div>
+    <ion-list no-lines>
+
+      <ion-item menuClose (click)="goToNavigationHome()">
+        <div class='item-side'>
+          <img src='assets/images/icon-home-button.png' width=20>
+          <span>Início</span>
+        </div>
+      </ion-item>
+      <!-- INICIO MEU CADASTRO -->
+
+      <ion-item (click)="openCadastreNav()" id="cadastre" [ngClass]="{'sub-list-item': this.cadastreNav === true}">
         <div class='item-side'>
           <img src='assets/images/icon-smartphone.png' width=20>
           <span>Meu cadastro</span>

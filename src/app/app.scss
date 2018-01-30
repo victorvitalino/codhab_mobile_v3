@@ -82,7 +82,7 @@
   border-radius: 50%;
 }
 
-#menu-material {
+.menu-material {
 
   .menu-header {
     text-align: center;
@@ -125,13 +125,6 @@
 
   .sub-list-item {
     background-color: #fddb65 !important;
-  }
-
-  .avatar-active{
-    display: block!important;
-  }
-  .login-box{
-    display: none;
   }
 
   .user-avatar {

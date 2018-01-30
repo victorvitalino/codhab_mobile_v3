@@ -10,16 +10,15 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class LoginServiceProvider {
 
-  constructor(public http: HttpClient, private storage:Storage, ) {
+  constructor(public http: HttpClient, private storage:Storage ) {
     console.log('Hello LoginServiceProvider Provider');
   }
 
-  signUser(cpf,auth){
-    return this.storage.set('Signed', { cpf: cpf , auth:auth, signed:true})
+  signUser(cpf,auth,name){
+    return this.storage.set('Signed', { cpf: cpf , auth:auth, signed:true, name:name })
       .then( () => console.log('Sucesso'),
       error => console.error('Error storing item', error)
       );
-      
   }
 
   signEntity(cnpj,auth){

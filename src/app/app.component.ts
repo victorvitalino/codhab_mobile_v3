@@ -17,6 +17,7 @@ import { LoginServiceProvider } from '../providers/login-service/login-service';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  
 
   rootPage: any = WelcomePage;
 
@@ -42,6 +43,7 @@ export class MyApp {
               public loadingCtrl:LoadingController,
               public service:LoginServiceProvider,
               private geolocation: Geolocation,
+              private menu: MenuController,
               private ga: GoogleAnalytics,
               public iab:InAppBrowser,
               public dataServiceProvider: DataServiceProvider
@@ -50,14 +52,7 @@ export class MyApp {
     this.getUserSigned();
 
 
-
-    // Ionic Analytics
-    // this.ga.startTrackerWithId('UA-96549234-1').then(() => {
-    //   this.ga.trackView('test');
-    // }).catch(e => console.log('Error starting GoogleAnalytics', e));
-
     platform.ready().then(() => {
-
       this.geolocation.getCurrentPosition().then((resp) => {
         this.latitude = resp.coords.latitude;
         this.longitude = resp.coords.longitude
@@ -93,8 +88,6 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
-
-
   getUserSigned(){
     this.service.getData().then((resp) => {
       this.service.getCheckCandidate(resp.cpf).subscribe((response)=>{
@@ -103,11 +96,17 @@ export class MyApp {
       })
       if (resp.signed == true) {
         this.user_signed = true
+        this.menu.enable(false, 'menu1')
+        this.menu.enable(true, 'menu2')
         this.nav.setRoot('NavigationPage')
       } else {
         this.user_signed = false
+        this.menu.enable(true, 'menu1')
+        this.menu.enable(false, 'menu2')
       }
     }).catch((error) => {
+      this.menu.enable(true, 'menu1')
+      this.menu.enable(false, 'menu2')
       this.user_signed = false
     })
   }
@@ -267,5 +266,8 @@ export class MyApp {
   }
   goToWelcome(){
     this.nav.setRoot('WelcomePage')
+  }
+  teste(){
+    console.log('filho de uma piranha')
   }
 }

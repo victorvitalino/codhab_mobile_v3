@@ -37,6 +37,8 @@ import { TextServiceProvider } from '../providers/text-service/text-service';
 import { AuthProvider } from '../providers/auth/auth';
 import { SchedulesProvider } from '../providers/schedules/schedules';
 import { AttendanceProvider } from '../providers/attendance/attendance';
+import { UserDataProvider } from '../providers/user-data/user-data';
+
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { AttendanceProvider } from '../providers/attendance/attendance';
     AuthProvider,
     SchedulesProvider,
     AttendanceProvider,
+    UserDataProvider,
   ]
 })
 export class AppModule {}

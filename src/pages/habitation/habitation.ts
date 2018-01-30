@@ -13,11 +13,11 @@ export class HabitationPage {
   imageURI:any;
   imageFileName:any;
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-     private transfer: FileTransfer,
-     private camera: Camera,
-     public loadingCtrl: LoadingController,
-     public toastCtrl: ToastController){
+    public navParams: NavParams,
+    private transfer: FileTransfer,
+    private camera: Camera,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController){
   }
 
   getImage() {

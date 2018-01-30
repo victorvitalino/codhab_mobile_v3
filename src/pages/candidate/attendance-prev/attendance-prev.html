@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <br>
+    <h1 class='text-center first-animation'>
+      <b> Prezado(a) {{user_name}} </b>
+    </h1>
+    <br>
+    <h4 class='text-center second-animation'>
+      <p>As atualizações abaixo estão disponíveis para você. Para continuar basta escolher uma.</p>
+    </h4>
+
+  </div>
+  <div class='third-animation text-center'>
+
+      <button ion-button color="primary" (click)="goToAttendanceBasic()">Atualização de Dados Básicos</button>
+      <button ion-button color="primary" (click)="goToAttendance()">Atualização Cadastral</button>
+
+  </div>
+</ion-content>

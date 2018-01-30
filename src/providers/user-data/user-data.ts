@@ -6,14 +6,14 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
+
 @Injectable()
-export class AttendanceProvider {
+export class UserDataProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello AttendanceProvider Provider');
+  constructor(public http: HttpClient, private storage:Storage) {
+    console.log('Hello UserDataProvider Provider');
   }
-
-  getAttendances(){
-    return this.http.get('/pc/attendance/tickets').map((response:Response) => response)
+  getData() {
+    return this.storage.get('Signed')
   }
 }

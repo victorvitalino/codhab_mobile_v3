@@ -41,8 +41,8 @@ export class WelcomeChatPage {
         if (status == 401){
           this.presentToast(response['data']['errors']['code'])
         }else{
-          this.loginService.signUser(this.cpf_cnpj,response['data']['auth_token'])
-          window.location.reload();
+          this.loginService.signUser(this.cpf_cnpj,response['data']['auth_token'],this.name)
+          this.navCtrl.setRoot('NavigationPage')
         }
       })
     }else{
@@ -53,7 +53,7 @@ export class WelcomeChatPage {
           if (status == 401) {
             this.presentToast(response['data']['errors']['code'])
           } else {
-            this.loginService.signUser(this.cpf_cnpj, response['data']['auth_token'])
+            this.loginService.signUser(this.cpf_cnpj, response['data']['auth_token'],this.name)
             window.location.reload();
           }
         })
