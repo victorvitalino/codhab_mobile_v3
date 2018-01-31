@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { map } from 'rxjs/operators/map';
+import { Http, Response, Headers, RequestOptions } from "@angular/http";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 
 export class ChatMessage {
-    messageId: string;
-    userId: string;
-    userName: string;
-    userAvatar: string;
-    toUserId: string;
-    time: number | string;
-    message: string;
-    status: string;
+    content: string;
 }
 
 export class UserInfo {
@@ -24,36 +18,51 @@ export class UserInfo {
 @Injectable()
 export class ChatService {
 
-    constructor(private http: HttpClient,
+    constructor(private http: Http,
                 private events: Events) {
     }
 
     mockNewMsg(msg) {
-        const mockMsg: ChatMessage = {
-            messageId: Date.now().toString(),
-            userId: '210000198410281948',
-            userName: 'CODHAB',
-            userAvatar: './assets/images/icon-codhab.png',
-            toUserId: '140000198202211138',
-            time: Date.now(),
-            message: msg.message,
-            status: 'success'
-        };
+        const mockMsg: ChatMessage = msg.message
+                    // const mockMsg: ChatMessage = {
+                    //         content: msg.message
+                    // };
 
-        setTimeout(() => {
-            this.events.publish('chat:received', mockMsg, Date.now())
-        }, Math.random() * 10000)
+        // setTimeout(() => {
+        //     this.events.publish('chat:received', mockMsg, Date.now())
+        // }, Math.random() * 10000)
     }
 
-    getMsgList(): Observable<ChatMessage[]> {
+    // getMsgList(token): Observable<ChatMessage[]> {
+    getMsgList(token){
+        let myHeaders = new Headers();
+        myHeaders.set('Content-Type', 'application/json');
+        myHeaders.set('Accept', 'text/plain');
+        myHeaders.set('Authorization', token)
         const msgListUrl = './assets/mock/msg-list.json';
-        return this.http.get<any>(msgListUrl)
-        .pipe(map(response => response.array));
+        return this.http.get('/pc/attendance/chat_comments', { headers: myHeaders })
+        .pipe(map(this.extractData));
     }
 
-    sendMsg(msg: ChatMessage) {
-        return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-        .then(() => this.mockNewMsg(msg));
+    private extractData(res: Response) {
+        let body = res.json();
+        return body.data;
+    }
+    // sendMsg(msg: ChatMessage) {
+    //     return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
+    //     .then(() => this.mockNewMsg(msg));
+    // }
+    sendMsg(msg: ChatMessage,token) {
+        let content = msg.content
+
+        let myHeaders = new Headers();
+        myHeaders.set('Content-Type', 'application/json');
+        myHeaders.set('Accept', 'text/plain');
+        myHeaders.set('Authorization', token)
+        return this.http.post('/pc/attendance/chat_comments', { content: content, attendant:false }, { headers: myHeaders,})
+        .map((resp) =>{
+            console.log(resp)
+        })
     }
 
     getUserInfo(): Promise<UserInfo> {
@@ -64,5 +73,6 @@ export class ChatService {
         };
         return new Promise(resolve => resolve(userInfo));
     }
+    
 
 }

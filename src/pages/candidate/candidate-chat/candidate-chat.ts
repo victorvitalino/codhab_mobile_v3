@@ -2,25 +2,31 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams, ToastController } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
 import { ChatService, ChatMessage, UserInfo } from "../../../providers/chat-service";
+import { CandidateChatProvider } from '../../../providers/candidate-chat/candidate-chat';
+import { UserDataProvider } from '../../../providers/user-data/user-data';
+
+
 
 @IonicPage()
 @Component({
-  selector: 'page-candidate-chat',
-  templateUrl: 'candidate-chat.html',
+    selector: 'page-candidate-chat',
+    templateUrl: 'candidate-chat.html',
 })
 export class CandidateChatPage {
 
-   @ViewChild(Content) content: Content;
+    @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
     msgList: ChatMessage[] = [];
     user: UserInfo;
     toUser: UserInfo;
     editorMsg = '';
     editorSwitch : boolean;
-
+    token :string = '';
     constructor(navParams: NavParams,
                 private chatService: ChatService,
                 private toastCtrl: ToastController,
+                private candidateChat: CandidateChatProvider,
+                private candidateData: UserDataProvider,
                 private events: Events,) {
         this.editorSwitch = true;
         // Get the navParams toUserId parameter
@@ -35,6 +41,14 @@ export class CandidateChatPage {
             this.user = res
         });
 
+        this.candidateData.getData().then((response) =>{
+            this.candidateChat.getChats(response.auth)
+            .subscribe((resp)=>{
+                console.log(resp)
+            })
+        })
+        
+
     }
 
     ionViewWillLeave() {
@@ -43,9 +57,11 @@ export class CandidateChatPage {
     }
 
     ionViewDidEnter() {
-        //get message list
-        this.getMsg();
-
+        this.candidateData.getData().then((resp)=>{
+            this.token = resp.auth;
+            //get message list
+            this.getMsg(this.token);
+        })
         // Subscribe to received  new message events
         this.events.subscribe('chat:received', msg => {
             this.pushNewMsg(msg);
@@ -67,11 +83,12 @@ export class CandidateChatPage {
      * @name getMsg
      * @returns {Promise<ChatMessage[]>}
      */
-    private getMsg() {
+    private getMsg(token) {
         // Get mock message list
         return this.chatService
-        .getMsgList()
+            .getMsgList(token)
         .subscribe(res => {
+            console.log(res)
             this.msgList = res;
             this.scrollToBottom();
         });
@@ -86,26 +103,19 @@ export class CandidateChatPage {
         // Mock message
         const id = Date.now().toString();
         let newMsg: ChatMessage = {
-            messageId: Date.now().toString(),
-            userId: this.user.id,
-            userName: this.user.name,
-            userAvatar: this.user.avatar,
-            toUserId: this.toUser.id,
-            time: Date.now(),
-            message: this.editorMsg,
-            status: 'pending'
+            content: this.editorMsg
         };
 
         this.pushNewMsg(newMsg);
         this.editorMsg = '';
-
-        this.chatService.sendMsg(newMsg)
-        .then(() => {
-            let index = this.getMsgIndexById(id);
-            if (index !== -1) {
-                this.msgList[index].status = 'success';
-                this.editorSwitch = false
-            }
+        this.chatService.sendMsg(newMsg,this.token)
+        .subscribe((resp) => {
+            console.log(resp)
+            // let index = this.getMsgIndexById(id);
+            // if (index !== -1) {
+            //     this.msgList[index].status = 'success';
+            //     this.editorSwitch = false
+            // }
         })
     }
 
@@ -117,28 +127,33 @@ export class CandidateChatPage {
     pushNewMsg(msg: ChatMessage) {
         const userId = this.user.id,
         toUserId = this.toUser.id;
+        console.log(msg)
+        // let msg2: ChatMessage = {
+        //     content: this.editorMsg,
+        //     attendant_status :false
+        // }
         // Verify user relationships
-        if (msg.userId === userId && msg.toUserId === toUserId) {
+        // if (msg.userId === userId && msg.toUserId === toUserId) {
             this.msgList.push(msg);
-            let toast = this.toastCtrl.create({
-                message: 'Você só poderá enviar uma nova mensagem após a resposta da CODHAB',
-                position: 'bottom',
-                duration: 2000,
-                dismissOnPageChange: true
-            });
-            toast.present();
-        } else if (msg.toUserId === userId && msg.userId === toUserId) {
+            // let toast = this.toastCtrl.create({
+            //     message: 'Você só poderá enviar uma nova mensagem após a resposta da CODHAB',
+            //     position: 'bottom',
+            //     duration: 2000,
+            //     dismissOnPageChange: true
+            // });
+            // toast.present();
+        // } else if (msg.toUserId === userId && msg.userId === toUserId) {
         
-            this.editorSwitch = true;
-            this.msgList.push(msg);
-        }
+            // this.editorSwitch = true;
+            // this.msgList.push(msg);
+        // }
         this.scrollToBottom();
     }
 
-    getMsgIndexById(id: string) {
+    // getMsgIndexById(id: string) {
     
-        return this.msgList.findIndex(e => e.messageId === id)
-    }
+    //     return this.msgList.findIndex(e => e.messageId === id)
+    // }
     
     scrollToBottom() {
         setTimeout(() => {

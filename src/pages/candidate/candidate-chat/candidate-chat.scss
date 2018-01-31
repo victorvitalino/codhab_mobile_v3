@@ -85,9 +85,9 @@ page-candidate-chat {
         }
       }
     }
-    .message.left {
+    .message.right.left {
       .msg-content {
-        background-color: $toUserBackgroundColor;
+        background-color: $toUserBackgroundColor!important;
         float: left;
       }
       .msg-detail {
@@ -96,11 +96,18 @@ page-candidate-chat {
       .user-img {
         left: 0;
       }
+      .msg-info{
+        text-align: left!important;
+      }
       .msg-content {
         color: #343434;
         span.triangle {
-          border-top-width: 0;
+          border-style: solid;
+          border-color: #ddd;
+          border-width: 1px;
+          background-color: $toUserBackgroundColor!important;
           border-right-width: 0;
+          border-top-width: 0;
           left: -5px;
         }
       }

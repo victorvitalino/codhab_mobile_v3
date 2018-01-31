@@ -38,6 +38,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { SchedulesProvider } from '../providers/schedules/schedules';
 import { AttendanceProvider } from '../providers/attendance/attendance';
 import { UserDataProvider } from '../providers/user-data/user-data';
+import { CandidateChatProvider } from '../providers/candidate-chat/candidate-chat';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { UserDataProvider } from '../providers/user-data/user-data';
     SchedulesProvider,
     AttendanceProvider,
     UserDataProvider,
+    CandidateChatProvider,
   ]
 })
 export class AppModule {}
