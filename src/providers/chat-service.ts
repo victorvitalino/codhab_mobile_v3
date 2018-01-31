@@ -9,12 +9,6 @@ export class ChatMessage {
     content: string;
 }
 
-// export class UserInfo {
-//     id: string;
-//     name?: string;
-//     avatar?: string;
-// }
-
 @Injectable()
 export class ChatService {
 
@@ -53,15 +47,5 @@ export class ChatService {
             console.log(resp)
         })
     }
-
-    // getUserInfo(): Promise<UserInfo> {
-    //     const userInfo: UserInfo = {
-    //         id: '140000198202211138',
-    //         name: 'Maria de Jesus',
-    //         avatar: './assets/images/profile-1.jpg'
-    //     };
-    //     return new Promise(resolve => resolve(userInfo));
-    // }
-    
 
 }

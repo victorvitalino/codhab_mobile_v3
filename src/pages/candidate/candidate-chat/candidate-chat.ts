@@ -17,8 +17,6 @@ export class CandidateChatPage {
     @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
     msgList: ChatMessage[] = [];
-    // user: UserInfo;
-    // toUser: UserInfo;
     editorMsg = '';
     editorSwitch : boolean;
     token :string = '';
@@ -29,17 +27,6 @@ export class CandidateChatPage {
                 private candidateData: UserDataProvider,
                 private events: Events,) {
         this.editorSwitch = true;
-        // Get the navParams toUserId parameter
-        // this.toUser = {
-        //     id: "210000198410281948",
-        //     name:"CODHAB"
-
-        // };
-        // Get mock user information
-        // this.chatService.getUserInfo()
-        // .then((res) => {
-        //     this.user = res
-        // });
 
         this.candidateData.getData().then((response) =>{
             this.candidateChat.getChats(response.auth)
@@ -111,11 +98,6 @@ export class CandidateChatPage {
         this.chatService.sendMsg(newMsg,this.token)
         .subscribe((resp) => {
             console.log(resp)
-            // let index = this.getMsgIndexById(id);
-            // if (index !== -1) {
-            //     this.msgList[index].status = 'success';
-            //     this.editorSwitch = false
-            // }
         })
     }
 
@@ -125,15 +107,7 @@ export class CandidateChatPage {
      */
 
     pushNewMsg(msg: ChatMessage) {
-        // const userId = this.user.id,
-        // toUserId = this.toUser.id;
         console.log(msg)
-        // let msg2: ChatMessage = {
-        //     content: this.editorMsg,
-        //     attendant_status :false
-        // }
-        // Verify user relationships
-        // if (msg.userId === userId && msg.toUserId === toUserId) {
             this.msgList.push(msg);
             // let toast = this.toastCtrl.create({
             //     message: 'Você só poderá enviar uma nova mensagem após a resposta da CODHAB',
@@ -142,18 +116,8 @@ export class CandidateChatPage {
             //     dismissOnPageChange: true
             // });
             // toast.present();
-        // } else if (msg.toUserId === userId && msg.userId === toUserId) {
-        
-            // this.editorSwitch = true;
-            // this.msgList.push(msg);
-        // }
         this.scrollToBottom();
     }
-
-    // getMsgIndexById(id: string) {
-    
-    //     return this.msgList.findIndex(e => e.messageId === id)
-    // }
     
     scrollToBottom() {
         setTimeout(() => {
