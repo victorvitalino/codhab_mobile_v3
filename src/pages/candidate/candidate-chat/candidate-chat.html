@@ -32,6 +32,9 @@
               <span *ngIf="msg.created_at">
                 Você disse:&nbsp;&nbsp;&nbsp;{{msg.created_at | relativeTime}}
               </span>
+              <span  *ngIf="!!!msg.created_at" class="aviso">
+                Agora você só poderá enviar mensagens após a resposta da CODHAB!
+              </span>
             </p>
           </div>
         </ng-template>

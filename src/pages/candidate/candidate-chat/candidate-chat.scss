@@ -10,6 +10,16 @@ page-candidate-chat {
     background-color: #fff;
     height: 55px;
   }
+  .aviso{
+    background-color: #fef4c5;
+    padding:5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    position: absolute;
+    left:0px;
+    top:60px;
+
+  }
 
   .line-breaker {
     white-space: pre-line;
@@ -61,7 +71,7 @@ page-candidate-chat {
         }
         .msg-content {
           position: relative;
-          margin-top: 5px;
+          margin-top: 15px;
           border-radius: 5px;
           padding: 8px;
           border: 1px solid #ddd;

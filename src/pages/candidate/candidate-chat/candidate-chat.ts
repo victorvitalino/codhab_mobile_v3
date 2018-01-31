@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavParams, ToastController } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
-import { ChatService, ChatMessage, UserInfo } from "../../../providers/chat-service";
+import { ChatService, ChatMessage } from "../../../providers/chat-service";
 import { CandidateChatProvider } from '../../../providers/candidate-chat/candidate-chat';
 import { UserDataProvider } from '../../../providers/user-data/user-data';
 
@@ -17,8 +17,8 @@ export class CandidateChatPage {
     @ViewChild(Content) content: Content;
     @ViewChild('chat_input') messageInput: TextInput;
     msgList: ChatMessage[] = [];
-    user: UserInfo;
-    toUser: UserInfo;
+    // user: UserInfo;
+    // toUser: UserInfo;
     editorMsg = '';
     editorSwitch : boolean;
     token :string = '';
@@ -30,16 +30,16 @@ export class CandidateChatPage {
                 private events: Events,) {
         this.editorSwitch = true;
         // Get the navParams toUserId parameter
-        this.toUser = {
-            id: "210000198410281948",
-            name:"CODHAB"
+        // this.toUser = {
+        //     id: "210000198410281948",
+        //     name:"CODHAB"
 
-        };
+        // };
         // Get mock user information
-        this.chatService.getUserInfo()
-        .then((res) => {
-            this.user = res
-        });
+        // this.chatService.getUserInfo()
+        // .then((res) => {
+        //     this.user = res
+        // });
 
         this.candidateData.getData().then((response) =>{
             this.candidateChat.getChats(response.auth)
@@ -125,8 +125,8 @@ export class CandidateChatPage {
      */
 
     pushNewMsg(msg: ChatMessage) {
-        const userId = this.user.id,
-        toUserId = this.toUser.id;
+        // const userId = this.user.id,
+        // toUserId = this.toUser.id;
         console.log(msg)
         // let msg2: ChatMessage = {
         //     content: this.editorMsg,

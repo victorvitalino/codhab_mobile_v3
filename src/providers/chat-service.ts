@@ -9,11 +9,11 @@ export class ChatMessage {
     content: string;
 }
 
-export class UserInfo {
-    id: string;
-    name?: string;
-    avatar?: string;
-}
+// export class UserInfo {
+//     id: string;
+//     name?: string;
+//     avatar?: string;
+// }
 
 @Injectable()
 export class ChatService {
@@ -24,16 +24,8 @@ export class ChatService {
 
     mockNewMsg(msg) {
         const mockMsg: ChatMessage = msg.message
-                    // const mockMsg: ChatMessage = {
-                    //         content: msg.message
-                    // };
-
-        // setTimeout(() => {
-        //     this.events.publish('chat:received', mockMsg, Date.now())
-        // }, Math.random() * 10000)
     }
 
-    // getMsgList(token): Observable<ChatMessage[]> {
     getMsgList(token){
         let myHeaders = new Headers();
         myHeaders.set('Content-Type', 'application/json');
@@ -48,10 +40,7 @@ export class ChatService {
         let body = res.json();
         return body.data;
     }
-    // sendMsg(msg: ChatMessage) {
-    //     return new Promise(resolve => setTimeout(() => resolve(msg), Math.random() * 1000))
-    //     .then(() => this.mockNewMsg(msg));
-    // }
+
     sendMsg(msg: ChatMessage,token) {
         let content = msg.content
 
@@ -65,14 +54,14 @@ export class ChatService {
         })
     }
 
-    getUserInfo(): Promise<UserInfo> {
-        const userInfo: UserInfo = {
-            id: '140000198202211138',
-            name: 'Maria de Jesus',
-            avatar: './assets/images/profile-1.jpg'
-        };
-        return new Promise(resolve => resolve(userInfo));
-    }
+    // getUserInfo(): Promise<UserInfo> {
+    //     const userInfo: UserInfo = {
+    //         id: '140000198202211138',
+    //         name: 'Maria de Jesus',
+    //         avatar: './assets/images/profile-1.jpg'
+    //     };
+    //     return new Promise(resolve => resolve(userInfo));
+    // }
     
 
 }
