@@ -28,12 +28,12 @@ export class CandidateChatPage {
                 private events: Events,) {
         this.editorSwitch = true;
 
-        this.candidateData.getData().then((response) =>{
-            this.candidateChat.getChats(response.auth)
-            .subscribe((resp)=>{
-                console.log(resp)
-            })
-        })
+        // this.candidateData.getData().then((response) =>{
+        //     this.candidateChat.getChats(response.auth)
+        //     .subscribe((resp)=>{
+        //         console.log(resp)
+        //     })
+        // })
         
 
     }
@@ -47,6 +47,7 @@ export class CandidateChatPage {
         this.candidateData.getData().then((resp)=>{
             this.token = resp.auth;
             //get message list
+            // console.log(resp.auth)
             this.getMsg(this.token);
         })
         // Subscribe to received  new message events

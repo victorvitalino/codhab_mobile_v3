@@ -28,7 +28,6 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { NavigationPageModule } from '../pages/navigation/navigation.module';
 import { WelcomePageModule } from '../pages/welcome/welcome.module';
 
-
 /* Providers */
 import { DataServiceProvider } from '../providers/data-service/data-service';
 import { HabitationProvider } from '../providers/habitation/habitation';
@@ -39,7 +38,6 @@ import { SchedulesProvider } from '../providers/schedules/schedules';
 import { AttendanceProvider } from '../providers/attendance/attendance';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { CandidateChatProvider } from '../providers/candidate-chat/candidate-chat';
-
 
 @NgModule({
   declarations: [

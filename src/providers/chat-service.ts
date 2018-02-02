@@ -28,6 +28,9 @@ export class ChatService {
         const msgListUrl = './assets/mock/msg-list.json';
         return this.http.get('/pc/attendance/chat_comments', { headers: myHeaders })
         .pipe(map(this.extractData));
+        // .map((resp)=>{
+        //     console.log(resp)
+        // })
     }
 
     private extractData(res: Response) {

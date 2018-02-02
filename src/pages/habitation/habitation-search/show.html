@@ -4,19 +4,14 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+    <h2>Pesquisa CPF/CNPJ</h2>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <h1 class='text-center'>
-      <b> Pesquisa CPF/CNPJ </b>
-  </h1>
   <ion-searchbar [(ngModel)]="value" (keyup.enter)="searchCandidate(value)"></ion-searchbar>
-
-  
   <ion-item-group *ngIf="candidate !== undefined">
     <ion-item-divider color="light">
       <b>DADOS PESSOAIS</b>

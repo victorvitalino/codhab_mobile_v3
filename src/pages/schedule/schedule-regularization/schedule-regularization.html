@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+    <h2>Agendamento Regularização</h2>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <span ion-datepicker [(value)]="initDate" [disabledDates]="disabledDates" locale="pt-BR" clear class="ScheduleDate">
+    <span>{{initDate | date}}
+      <ion-icon name="clipboard" item-left></ion-icon>
+    </span>
+  </span>
+</ion-content>

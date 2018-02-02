@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { SchedulePage } from './schedule';
+import { SchedulePrevPage } from './schedule-prev';
 import { MyDatePickerModule } from 'mydatepicker';
+
 @NgModule({
   declarations: [
-    SchedulePage,
+    SchedulePrevPage,
   ],
   imports: [
-    IonicPageModule.forChild(SchedulePage),
+    IonicPageModule.forChild(SchedulePrevPage),
     MyDatePickerModule
   ],
 })
-export class SchedulePageModule {}
+export class SchedulePrevPageModule {}

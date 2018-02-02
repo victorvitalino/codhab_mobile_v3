@@ -6,5 +6,13 @@
 
 
 <ion-content padding>
-teste
+
+
+<form #myForm="ngForm" novalidate>
+  <my-date-picker name="mydate" [locale]="locale" (inputFieldChanged)="onInputFieldChanged($event)" [options]="myDatePickerOptions"
+    [(ngModel)]="model" required></my-date-picker>
+
+</form>
+
+
 </ion-content>
