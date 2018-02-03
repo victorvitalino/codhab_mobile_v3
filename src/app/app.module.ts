@@ -38,6 +38,7 @@ import { SchedulesProvider } from '../providers/schedules/schedules';
 import { AttendanceProvider } from '../providers/attendance/attendance';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { CandidateChatProvider } from '../providers/candidate-chat/candidate-chat';
+import { CodhabCommonProvider } from '../providers/codhab-common/codhab-common';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CandidateChatProvider } from '../providers/candidate-chat/candidate-cha
     AttendanceProvider,
     UserDataProvider,
     CandidateChatProvider,
+    CodhabCommonProvider,
   ]
 })
 export class AppModule {}

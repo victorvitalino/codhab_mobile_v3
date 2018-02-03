@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CodhabCommonProvider } from '../../../providers/codhab-common/codhab-common';
 
-/**
- * Generated class for the AttendancePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,11 +10,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AttendancePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private common:CodhabCommonProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AttendancePage');
+    this.common.getGender()
+    this.common.getSpecialCondition()
+    this.common.getStates()
+    this.common.getCities(7)
   }
 
 }

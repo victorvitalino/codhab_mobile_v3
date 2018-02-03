@@ -11,9 +11,9 @@ import 'rxjs/add/operator/map';
 export class UserDataProvider {
 
   constructor(public http: HttpClient, private storage:Storage) {
-    console.log('Hello UserDataProvider Provider');
   }
   getData() {
     return this.storage.get('Signed')
   }
+
 }

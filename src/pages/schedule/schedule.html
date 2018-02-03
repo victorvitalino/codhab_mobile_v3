@@ -8,11 +8,55 @@
 <ion-content padding>
 
 
-<form #myForm="ngForm" novalidate>
+<!-- <form #myForm="ngForm" novalidate>
   <my-date-picker name="mydate" [locale]="locale" (inputFieldChanged)="onInputFieldChanged($event)" [options]="myDatePickerOptions"
     [(ngModel)]="model" required></my-date-picker>
 
-</form>
+</form> -->
+<p class='text-center text-content'>
+  Para realizar agendamentos é muito simples, basta você seguir os passos listados abaixo:
+</p>
 
+<h2> 1º Preencha o formulário abaixo </h2>
+<form #myForm="ngForm" name="myform">
+  <!-- <ion-input type="text" placeholder="teste"></ion-input> -->
+  <ion-item>
+    <ion-label color="primary" stacked>CPF</ion-label>
+    <ion-input placeholder="Apenas números"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Nome</ion-label>
+    <ion-input placeholder="Seu nome completo"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Telefone</ion-label>
+    <ion-input placeholder="ex: (61)xxxxxxxx"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Celular</ion-label>
+    <ion-input placeholder="ex: (61)xxxxxxxx"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary" stacked>Email</ion-label>
+    <ion-input placeholder="Seu email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-select color="primary" placeholder="Escolha sua cidade">
+      <ion-label color="primary" stacked>Escolha sua cidade</ion-label>
+      <ion-option>a</ion-option>
+      <ion-option>b</ion-option>
+      <ion-option>c</ion-option>
+      <ion-option>d</ion-option>
+      <ion-option>e</ion-option>
+    </ion-select>
+  </ion-item>
+  <br>
+  <br>
+
+    <my-date-picker name="mydate" [locale]="locale" (inputFieldChanged)="onInputFieldChanged($event)" [options]="myDatePickerOptions"
+    [(ngModel)]="model" required></my-date-picker>
+  
+
+</form>
 
 </ion-content>
