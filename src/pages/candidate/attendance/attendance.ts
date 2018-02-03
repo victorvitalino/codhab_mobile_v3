@@ -9,15 +9,22 @@ import { CodhabCommonProvider } from '../../../providers/codhab-common/codhab-co
   templateUrl: 'attendance.html',
 })
 export class AttendancePage {
-
+  cities : any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private common:CodhabCommonProvider) {
-  }
-
-  ionViewDidLoad() {
     this.common.getGender()
     this.common.getSpecialCondition()
     this.common.getStates()
-    this.common.getCities(7)
+    this.common.getCities(7).subscribe((resp)=>{
+      this.cities = resp
+      console.log(this.cities)
+    })
+    // this.cities = Array.of(this.cities)
+    // console.log('oi',this.cities)
+
+  }
+
+  ionViewDidLoad() {
+
   }
 
 }

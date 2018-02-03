@@ -11,5 +11,15 @@
 
 
 <ion-content padding>
+<form #myForm="ngForm" name="myform">
+  <ion-item>
+    <ion-select color="primary" placeholder="Escolha sua cidade">
+      <ion-label color="primary" stacked>Escolha sua cidade</ion-label>
+      <ion-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <br>
+  <br>
 
+</form>
 </ion-content>
