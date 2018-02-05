@@ -39,5 +39,8 @@ export class CandidatePage {
   goToAttendancePrev(){
     this.navCtrl.push('AttendancePrevPage')
   }
+  goToAttendance(){
+    this.navCtrl.push('AttendancePage')
+  }
 
 }

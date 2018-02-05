@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <h2>Atendimento Nº {{attendance_id}}</h2>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class='text-center' padding>
+    <h4 class='text-center second-animation'>
+      <p>Então {{user_name}}, o protocolo dessa atualização é o Nº{{attendance_id}} registrado na CODHAB</p>
+    </h4>
+    <h5>Abaixo estão as etapas que você precisa atualizar para concluir sua atualização.</h5>
+    <br/>
+          <ion-row>
+            <ion-col col-4 (click)='goToUpdateCadastre(user_context,attendance_id)'>
+              <ion-img width="50" height="50" src="assets/images/icon-profile.png"></ion-img>
+              <p class='caption-icon'>Dados de Cadastro</p>
+            </ion-col>
+            <ion-col col-4 (click)='goToDependents()'>
+              <ion-img width="50" height="50" src="assets/images/icon-family.png"></ion-img>
+              <p class='caption-icon'>Dependentes</p>
+            </ion-col>
+            <ion-col col-4 (click)='goToIndication()'>
+              <ion-img width="50" height="50" src="assets/images/icon-money.png"></ion-img>
+              <p class='caption-icon'>Renda</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-4 (click)='goToPontuation()'>
+              <ion-img width="50" height="50" src="assets/images/icon-phone-book.png"></ion-img>
+              <p class='caption-icon'>Dados de Contato</p>
+            </ion-col>
+            <ion-col col-4 (click)='goToIptu()'>
+              <ion-img width="50" height="50" src="assets/images/icon-resume.png"></ion-img>
+              <p class='caption-icon'>Cartorária</p>
+            </ion-col>
+          </ion-row>
+  </div>
+</ion-content>

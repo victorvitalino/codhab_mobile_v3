@@ -13,22 +13,16 @@ export class CodhabCommonProvider {
   }
 
   getGender() {
-    return this.httpclient.get('/pc/common/genders').map(resp => resp);
+    return this.httpclient.get('/pc/common/genders').map(resp => resp['data']);
   }
   getCivilState(){
-    return this.httpclient.get('/pc/common/civil_states').subscribe((response) => {
-      console.log(response['data'])
-    })
+    return this.httpclient.get('/pc/common/civil_states').map(resp => resp['data']);
   }
   getSpecialCondition(){
-    return this.httpclient.get('/pc/common/special_condition_types').subscribe((response) => {
-      console.log(response['data'])
-    })
+    return this.httpclient.get('/pc/common/special_condition_types').map(resp => resp['data']);
   }
   getStates(){
-    return this.httpclient.get('/pc/common/states').subscribe((response) => {
-      console.log(response['data'])
-    })
+    return this.httpclient.get('/pc/common/states').map(resp => resp['data']);
   }
 
   getCities(state_id){

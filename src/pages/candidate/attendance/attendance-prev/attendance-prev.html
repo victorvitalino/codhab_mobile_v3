@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form #myForm="ngForm" name="myform">
+    <ion-item>
+      <ion-select color="primary" placeholder="Escolha sua cidade">
+        <ion-label color="primary" stacked>Escolha sua cidade</ion-label>
+        <ion-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <br>
+
+  </form>
+</ion-content>
+

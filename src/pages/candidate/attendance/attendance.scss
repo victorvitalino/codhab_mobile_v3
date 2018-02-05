@@ -1,3 +1,39 @@
 page-attendance {
+    small {
+      display: block;
+    }
+
+    .item>ion-icon,
+    .item-inner>ion-icon {
+      font-size: 2.3rem;
+    }
+
+    .card-md {
+      padding-bottom: 8px;
+      padding-top: 8px;
+    }
+
+    ion-label {
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+  .badge-menu {
+    position: absolute;
+    border-radius: 85%;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin-top: -7px;
+    margin-left: 7px;
+    padding: 0;
+    display: block;
+
+
+    span{
+      display: block;
+      margin-top: 4px;
+
+    }
+  }
 
 }

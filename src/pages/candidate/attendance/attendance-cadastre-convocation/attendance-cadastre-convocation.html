@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <h2>Dados de Cadastro</h2>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <form #myForm="ngForm" name="myform" *ngFor="let item of cadastre">
+    <ion-label stacked>Nome:</ion-label>
+    <ion-input value="{{item.name}}" disabled></ion-input>
+    <ion-label stacked>CPF:</ion-label>
+    <ion-input value="{{item.cpf}}"></ion-input>
+    <ion-label stacked>Sexo</ion-label>
+    <ion-select color="primary" placeholder="Escolha o Sexo">
+      <ion-option *ngFor="let g of this.gender" value="{{g.id}}">{{g.name}}</ion-option>
+    </ion-select>
+    <ion-label stacked>Nascimento</ion-label>
+    <ion-input value="{{item.born}}"></ion-input>
+    <ion-label stacked>Naturalidade</ion-label>
+    <ion-select color="primary" placeholder="Naturalidade">
+      <ion-option *ngFor="let s of this.states" value="{{s.id}}">{{s.name}}</ion-option>
+    </ion-select>
+    <ion-label stacked>Estado Civil</ion-label>
+    <ion-select color="primary" placeholder="Estado Civil">
+      <ion-option *ngFor="let e of this.civilStates" value="{{e.id}}">{{e.name}}</ion-option>
+    </ion-select>
+    <ion-label stacked>Condição Especial</ion-label>
+    <ion-select color="primary" placeholder="Condição Especial">
+      <ion-option *ngFor="let c of this.special" value="{{c.id}}">{{c.name}}</ion-option>
+    </ion-select>
+    <ion-label stacked>Condição Especial</ion-label>
+    <ion-select color="primary" placeholder="Naturalidade">
+      <ion-option *ngFor="let s of this.states" value="{{s.id}}">{{s.name}}</ion-option>
+    </ion-select>
+    <ion-select color="primary" placeholder="Naturalidade">
+      <ion-option *ngFor="let s of this.states" value="{{s.id}}">{{s.name}}</ion-option>
+    </ion-select>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input value="{{item.name}}"></ion-input>
+    <!-- <ion-input *ngFor="let item of cadastre">{{item.name}}</ion-input>
+    <ion-input placeholder="{{item.name}}"></ion-input> -->
+    <!-- <ion-item>
+      <ion-select color="primary" placeholder="Escolha sua cidade">
+        <ion-label color="primary" stacked>Escolha sua cidade</ion-label>
+        <ion-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <br> -->
+
+  </form>
+</ion-content>

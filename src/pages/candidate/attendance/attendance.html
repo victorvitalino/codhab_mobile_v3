@@ -4,22 +4,52 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+      <h2>Atendimento</h2>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-<form #myForm="ngForm" name="myform">
-  <ion-item>
-    <ion-select color="primary" placeholder="Escolha sua cidade">
-      <ion-label color="primary" stacked>Escolha sua cidade</ion-label>
-      <ion-option *ngFor="let city of cities" value="{{city.id}}">{{city.name}}</ion-option>
-    </ion-select>
-  </ion-item>
-  <br>
-  <br>
+<ion-content>
+  <div class='text-center' *ngIf="this.attendance_new" padding>
+    <br>
+    <h1 class='text-center first-animation'>
+      <b> Prezado(a) {{user_name}} </b>
+    </h1>
+    <br>
+    <h4 class='text-center second-animation'>
+      <p>Todas as suas atualizações estão concluidas, gostaria de iniciar uma nova? </p>
+    </h4>
+    <button  ion-button color="primary" (click)="goToAttendance()">Nova Atualização</button>
+    <h5>Abaixo estão suas atualizações finalizadas. Clique para ver os detalhes.</h5>
+  </div>
+  <div *ngIf="!this.attendance_new" padding>
+    <br>
+    <h1 class='text-center first-animation'>
+      <b> Prezado(a) {{user_name}} </b>
+    </h1>
+    <br>
+    <h4 class='text-center second-animation'>
+      <p>Essas foram suas atualizações na CODHAB. Clique em uma para detalhar</p>
+    </h4>
 
-</form>
+
+  </div>
+  <div class='third-animation text-center'>
+    <ion-card (click)="goToDetail(item.id)" *ngFor="let item of attendances">
+      <button ion-item>
+        <ion-icon name="ios-refresh-circle-outline" item-start></ion-icon>
+        <b>Atualização para {{item.context_name}}</b>
+        <small>Situação: {{item.current_situation_name}}</small>
+        <small>Data: {{item.current_situation_date}}</small>
+        <ion-icon name="ios-chatbubbles-outline" item-end>
+          <ion-badge class="badge-menu" color="danger">
+              <span>
+                {{item.comments + 1}}
+              </span>
+          </ion-badge>
+        </ion-icon>
+      </button>
+    </ion-card>
+  </div>
 </ion-content>
