@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../../../providers/user-data/user-data';
 import { AttendanceProvider } from '../../../../providers/attendance/attendance';
 import { CodhabCommonProvider } from '../../../../providers/codhab-common/codhab-common';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { DateTime } from 'ionic-angular/components/datetime/datetime';
+import { AgeValidator } from '../../../../validators/age';
+import { UsernameValidator } from '../../../../validators/username';
+
 @IonicPage()
 @Component({
   selector: 'page-attendance-cadastre-convocation',
@@ -14,7 +17,6 @@ export class AttendanceCadastreConvocationPage {
   user_token: string = '';
   attendance_id: number;
   cadastre: any;
-  rForm: FormGroup;
   gender: any;
   states: any;
   special: any;
@@ -29,10 +31,55 @@ export class AttendanceCadastreConvocationPage {
   startDateArrival: string;
   startDateAddmission: string;
 
+
+
+  @ViewChild('signupSlider') signupSlider: any;
+
+  slideOneForm: FormGroup;
+
+  submitAttempt: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private userService: UserDataProvider, 
     private common:CodhabCommonProvider,
+    public formBuilder: FormBuilder,
     private attendanceService:AttendanceProvider) {
+      
+
+    this.slideOneForm = formBuilder.group({
+      name:'',
+      cpf:'',
+      gender_id:'',
+      mother_name:'',
+      father_name:'',
+      born:'',
+      nationality:'',
+      civil_state_id:'',
+      wedding_date:'',
+      wedding_regime:'',
+      rg:'',
+      rg_uf_id:'',
+      rg_org:'',
+      arrival_df:'',
+      born_uf_id:'',
+      place_birth: this.bornCities,
+      employment:'',
+      work_cep:'',
+      work_state_id:'',
+      work_city:'',
+      work_address:'',
+      admission_date:'',
+      cid:'',
+      nis:'',
+      special_condition:'',
+      special_condition_type_id:'',
+      adapted_property:''
+
+    });
+
+
+
+
       this.getGender()
       this.getStates()
       this.getSpecials()
@@ -129,5 +176,34 @@ export class AttendanceCadastreConvocationPage {
     }else{
       this.employ = false
     }
+  }
+  // save(){
+  //   console.log(this.myform.value)
+  // }
+
+
+  next() {
+    this.signupSlider.slideNext();
+  }
+
+  prev() {
+    this.signupSlider.slidePrev();
+  }
+
+  save() {
+
+    // this.submitAttempt = true;
+
+    // if (!this.slideOneForm.valid) {
+    //   this.signupSlider.slideTo(0);
+    // }
+    // else if (!this.slideTwoForm.valid) {
+    //   this.signupSlider.slideTo(1);
+    // }
+    // else {
+      console.log("success!")
+      console.log(this.slideOneForm.value);
+    // }
+
   }
 }
