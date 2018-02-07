@@ -1,0 +1,182 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <h2>Adicionar Dependente</h2>
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-slides #attendanceSlider>
+    <ion-slide>
+      <h3>Vamos iniciar com os dados pessoais.</h3>
+      <p *ngIf="submitAttempt" style="color: #ea6153;">Errrouu!.</p>
+      <form [formGroup]="slideOneForm">
+        <ion-item>
+          <ion-label stacked>Nome:</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>CPF:</ion-label>
+          <ion-input placeholder="Apenas Números" [(ngModel)]="cpf" (keyup)="cpf = format(cpf)" formControlName="cpf"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Genero:</ion-label>
+          <ion-select color="primary" formControlName="gender_id" multiple="false" placeholder="Escolha o genero" name="gender_id">
+            <ion-option selected *ngFor="let g of this.gender" value="{{g.id}}">{{g.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Nascimento:</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="born" [(ngModel)]="startDateBorn" name="born"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Cidade de Nascimento:</ion-label>
+          <ion-input formControlName="place_birth"></ion-input>
+        </ion-item>
+      </form>
+      <button ion-button full color="primary" (click)="next()">Próximo</button>
+    </ion-slide>
+    <ion-slide>
+      <h3>Vamos verificar as documentações pessoais?</h3>
+      <form [formGroup]="slideOneForm">
+        <ion-item>
+          <ion-label stacked>Nacionalidade:</ion-label>
+          <ion-input formControlName="nationality" name="nationality"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>RG:</ion-label>
+          <ion-input formControlName="rg" name="rg"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>RG-ORG:</ion-label>
+          <ion-input formControlName="rg_org" name="rg_org"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>RG-UF:</ion-label>
+          <ion-select formControlName="rg_uf_id" color="primary" multiple="false" placeholder="Escolha o UF" name="rg_uf_id">
+            <ion-option *ngFor="let state of this.states" value="{{state.id}}">{{state.acronym}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>NIS</ion-label>
+          <ion-input name="nis" formControlName="nis"></ion-input>
+        </ion-item>
+      </form>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="next()">Próximo</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <h3>Ele(a) possui alguma renda?</h3>
+      <form [formGroup]="slideOneForm">
+        <ion-item>
+          <ion-label stacked>Renda:</ion-label>
+          <ion-input placeholder="Apenas Números" formControlName="income" name="income"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Trabalha?</ion-label>
+          <ion-select color="primary" formControlName="employment" placeholder="Escolha" name="employment">
+            <ion-option value="true">Sim</ion-option>
+            <ion-option value="false">Não</ion-option>
+          </ion-select>
+        </ion-item>
+      </form>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="next()">Próximo</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <h3>Qual estado civil dele(a)?</h3>
+      <form [formGroup]="slideOneForm">
+        <ion-item>
+          <ion-label stacked>Estado Civil</ion-label>
+          <ion-select color="primary" multiple="false" formControlName="civil_state_id" placeholder="Estado Civil" name="civil_state">
+            <ion-option *ngFor="let civil of this.civilStates" value="{{civil.id}}">{{civil.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+      </form>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="next()">Próximo</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <h3>Ele possui algum tipo de deficiência comprovada e/ou precisa de adaptação em sua residência?</h3>
+      <form [formGroup]="slideOneForm">
+        <ion-item>
+          <ion-label stacked>Condição Especial?</ion-label>
+          <ion-select color="primary" formControlName="special_condition" [(ngModel)]="special_condition" placeholder="Condição Especial"
+            name="special_condition" (ionChange)="specialConditionCheck(special_condition)">
+            <ion-option value="true">Sim</ion-option>
+            <ion-option value="false">Não</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="specialCheck">
+          <ion-label stacked>Tipo de Condição Especial</ion-label>
+          <ion-select color="primary" formControlName="special_condition_type_id" multiple="false" placeholder="Condição Especial"
+            name="special_condition_type_id">
+            <ion-option *ngFor="let spec of this.special" value="{{spec.id}}">{{spec.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="specialCheck">
+          <ion-label stacked>Propriedade Adaptada?</ion-label>
+          <ion-select color="primary" formControlName="adapted_property" placeholder="Propriedade Adaptada" name="adapted_property">
+            <ion-option value="true">Sim</ion-option>
+            <ion-option value="false">Não</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="specialCheck">
+          <ion-label stacked>CID</ion-label>
+          <ion-input name="cid" formControlName="cid"></ion-input>
+        </ion-item>
+      </form>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="next()">Próximo</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="save()">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

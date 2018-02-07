@@ -27,14 +27,8 @@ export class AttendanceProvider {
 
   generateAttendances(token){
     let myHeaders = new Headers();
-    console.log(token)
     myHeaders.set('Authorization', token)
-    console.log(myHeaders)
-
     return this.http.post('/pc/attendance/tickets','',{ headers: myHeaders })
-      // .map((resp) => {
-      //   console.log(resp)
-      // });
   }
   getAttendanceDetail(token,id){
     let myHeaders = new Headers();
@@ -46,15 +40,44 @@ export class AttendanceProvider {
       .map(this.extractData);
   }
   
-  getAttendanceMirror(token,id){
+  getAttendanceMirror(token,ticket_id){
     let myHeaders = new Headers();
     myHeaders.set('Content-Type', 'application/json');
     myHeaders.set('Accept', 'text/plain');
     myHeaders.set('Authorization', token)
 
-    return this.http.get('/pc/attendance/tickets/'+id+'/cadastres', { headers: myHeaders })
+    return this.http.get('/pc/attendance/tickets/'+ticket_id+'/cadastres', { headers: myHeaders })
       .map(this.extractData);
   }
+
+  updateCadastre(token, ticket_id, mirror_id, obj){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+
+    return this.http.put('/pc/attendance/tickets/'+ ticket_id +'/cadastres/'+ mirror_id, obj, { headers: myHeaders })
+  }
+  getDependents(token,ticket_id){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+
+    return this.http.get('/pc/attendance/tickets/' + ticket_id + '/dependents', { headers: myHeaders })
+    .map(this.extractData)
+  }
+
+  createDependent(token,ticket_id,obj){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+
+    return this.http.post('/pc/attendance/tickets/' + ticket_id + '/dependents', obj ,{ headers: myHeaders })
+      .map(this.extractData)
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body.data;

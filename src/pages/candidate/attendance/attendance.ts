@@ -50,7 +50,7 @@ export class AttendancePage {
   }
 
   goToAttendance() {
-    this.navCtrl.push("AttendanceBasicPage")
+    this.attendanceGenererate()
   }
   goToDetail(id){
     this.navCtrl.push("AttendanceDetailPage",{id})

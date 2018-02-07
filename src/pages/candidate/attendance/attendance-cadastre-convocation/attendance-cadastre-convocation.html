@@ -9,13 +9,8 @@
 
   </ion-navbar>
 </ion-header>
-
-
 <ion-content padding>
-
-
-  <ion-slides #signupSlider>
-
+  <ion-slides #attendanceSlider>
     <ion-slide>
       <h3>Vamos iniciar com seu dados pessoais.</h3>
       <p *ngIf="submitAttempt" style="color: #ea6153;">Errrouu!.</p>
@@ -30,13 +25,13 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Genero:</ion-label>
-          <ion-select color="primary" formControlName="gender_id" placeholder="Escolha o genero" name="gender_id">
-            <ion-option *ngFor="let g of this.gender" value="{{g.id}}">{{g.name}}</ion-option>
+          <ion-select color="primary" [(ngModel)]="item.gender_id" formControlName="gender_id" placeholder="Escolha o genero" name="gender_id">
+            <ion-option selected *ngFor="let g of this.gender" value="{{g.id}}">{{g.name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label stacked>Nome da Mãe:</ion-label>
-          <ion-input formControlName="mother_name" name="mother_name" value="{{item.mother_name}}"></ion-input>
+          <ion-input formControlName="mother_name" name="mother_name" value="{{item.mother_name}}" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Nome do Pai:</ion-label>
@@ -45,6 +40,21 @@
       </form>
       <button ion-button full color="primary" (click)="next()">Próximo</button>
     </ion-slide>
+    
+    <!-- <ion-slide>
+    <h3>Fotinha aqui</h3> 
+      <ion-item>
+        <p>{{imageURI}}</p>
+        <button ion-button color="secondary" (click)="getImage()">Get Image</button>
+      </ion-item>
+      <ion-item>
+        <h4>Preview</h4>
+        <img src="{{imageURI}}" *ngIf="imageURI" alt="Ionic File" width="300" />
+      </ion-item>
+      <ion-item>
+        <button ion-button (click)="uploadFile()">Upload</button>
+      </ion-item>
+    </ion-slide> -->
 
     <ion-slide>
       <h3>Agora vamos falar um pouco de onde nasceu</h3>
@@ -59,14 +69,14 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Estado de Nascimento:</ion-label>
-          <ion-select color="primary" formControlName="born_uf_id" [(ngModel)]="born_uf_id" placeholder="Escolha o UF" name="born_uf_id"
+          <ion-select color="primary" formControlName="born_uf_id" [(ngModel)]="item.born_uf_id" placeholder="Escolha o UF" name="born_uf_id"
             (ionChange)="bornCity(born_uf_id)">
             <ion-option *ngFor="let state of this.states" [value]="state.id">{{state.acronym}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label stacked>Cidade de Nascimento:</ion-label>
-          <ion-select color="primary" formControlName="place_birth" placeholder="Escolha a cidade" name="place_birth">
+          <ion-select color="primary" formControlName="place_birth" [(ngModel)]="item.place_birth" placeholder="Escolha a cidade" name="place_birth">
             <ion-option *ngFor="let city of this.bornCities" value="{{city.id}}">{{city.name}}</ion-option>
           </ion-select>
         </ion-item>
@@ -183,7 +193,7 @@
             <ion-option *ngFor="let spec of this.special" value="{{spec.id}}">{{spec.name}}</ion-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="specialCheck">
           <ion-label stacked>Propriedade Adaptada?</ion-label>
           <ion-select color="primary" [(ngModel)]="adapted_property" formControlName="adapted_property" placeholder="Propriedade Adaptada"
             name="adapted_property">
@@ -191,7 +201,7 @@
             <ion-option value="false">Não</ion-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="specialCheck">
           <ion-label stacked>CID</ion-label>
           <ion-input name="cid" formControlName="cid" value="{{item.cid}}"></ion-input>
         </ion-item>
@@ -212,7 +222,8 @@
       <form [formGroup]="slideOneForm" *ngFor="let item of cadastre">
         <ion-item>
           <ion-label stacked>Trabalha?</ion-label>
-          <ion-select color="primary" formControlName="employment" [(ngModel)]="employment" placeholder="Trabalha?" name="employment" (ionChange)="employmentCheck(employment)">
+          <ion-select color="primary" formControlName="employment" [(ngModel)]="employment" placeholder="Trabalha?" name="employment"
+            (ionChange)="employmentCheck(employment)">
             <ion-option value="true">Sim</ion-option>
             <ion-option value="false">Não</ion-option>
           </ion-select>
@@ -223,7 +234,8 @@
         </ion-item>
         <ion-item *ngIf="employ">
           <ion-label stacked>Estado onde Trabalha</ion-label>
-          <ion-select color="primary" formControlName="work_state_id" [(ngModel)]="work_state_id" placeholder="Escolha o UF" name="work_state_id" (ionChange)="workCity(work_state_id)">
+          <ion-select color="primary" formControlName="work_state_id" [(ngModel)]="work_state_id" placeholder="Escolha o UF" name="work_state_id"
+            (ionChange)="workCity(work_state_id)">
             <ion-option *ngFor="let state of this.states" value="{{state.id}}">{{state.acronym}}</ion-option>
           </ion-select>
         </ion-item>
@@ -255,9 +267,18 @@
     </ion-slide>
 
     <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="save()">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
 
-      <button ion-button full color="primary" (click)="save()">Salvar</button>
 
     </ion-slide>
 

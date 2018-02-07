@@ -1,12 +1,13 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController  } from 'ionic-angular';
 import { UserDataProvider } from '../../../../providers/user-data/user-data';
 import { AttendanceProvider } from '../../../../providers/attendance/attendance';
 import { CodhabCommonProvider } from '../../../../providers/codhab-common/codhab-common';
 import { FormBuilder, FormGroup, Validators  } from '@angular/forms';
 import { DateTime } from 'ionic-angular/components/datetime/datetime';
-import { AgeValidator } from '../../../../validators/age';
-import { UsernameValidator } from '../../../../validators/username';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -14,8 +15,11 @@ import { UsernameValidator } from '../../../../validators/username';
   templateUrl: 'attendance-cadastre-convocation.html',
 })
 export class AttendanceCadastreConvocationPage {
+  imageURI: any;
+  imageFileName: any;
   user_token: string = '';
   attendance_id: number;
+  mirror_id: number;
   cadastre: any;
   gender: any;
   states: any;
@@ -29,17 +33,21 @@ export class AttendanceCadastreConvocationPage {
   startDateBorn: string;
   startDateWedding: string;
   startDateArrival: string;
-  startDateAddmission: string;
+  startDateAdmission: string;
 
 
 
-  @ViewChild('signupSlider') signupSlider: any;
+  @ViewChild('attendanceSlider') attendanceSlider: any;
 
   slideOneForm: FormGroup;
 
   submitAttempt: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private transfer: FileTransfer,
+    private camera: Camera,
+    public loadingCtrl: LoadingController,
+    public toastCtrl: ToastController, 
     private userService: UserDataProvider, 
     private common:CodhabCommonProvider,
     public formBuilder: FormBuilder,
@@ -76,10 +84,6 @@ export class AttendanceCadastreConvocationPage {
       adapted_property:''
 
     });
-
-
-
-
       this.getGender()
       this.getStates()
       this.getSpecials()
@@ -93,9 +97,11 @@ export class AttendanceCadastreConvocationPage {
       this.attendance_id = this.navParams.get('id')
       this.user_token = resp.auth
       this.attendanceService.getAttendanceMirror(this.user_token, this.attendance_id).subscribe((resp) => {
-        this.cadastre = Array.of(resp)
-  
-        if(this.cadastre[0]['born'] == undefined){
+      this.mirror_id = resp.id;
+      this.cadastre = Array.of(resp)
+      console.log(this.cadastre)
+        console.log(this.cadastre[0]['wedding_date'], this.cadastre[0]['arrival_df'], this.cadastre[0]['wedding_date'])
+      if(this.cadastre[0]['born'] == undefined){
           this.startDateBorn = new Date('01/01/2018').toISOString();
         }else{
           this.startDateBorn = new Date(this.cadastre[0]['born']).toISOString();
@@ -110,10 +116,10 @@ export class AttendanceCadastreConvocationPage {
         }else{
           this.startDateArrival = new Date(this.cadastre[0]['arrival_df']).toISOString();
         }
-        if (this.cadastre[0]['addmission_date'] == undefined){
-          this.startDateAddmission = new Date('01/01/2018').toISOString();
+        if (this.cadastre[0]['admission_date'] == undefined){
+          this.startDateAdmission = new Date('01/01/2018').toISOString();
         }else{
-          this.startDateAddmission = new Date(this.cadastre[0]['addmission_date']).toISOString();
+          this.startDateAdmission = new Date(this.cadastre[0]['admission_date']).toISOString();
         }
         console.log(this.cadastre)
         console.log(this.gender)
@@ -177,33 +183,84 @@ export class AttendanceCadastreConvocationPage {
       this.employ = false
     }
   }
-  // save(){
-  //   console.log(this.myform.value)
-  // }
-
 
   next() {
-    this.signupSlider.slideNext();
+    this.attendanceSlider.slideNext();
   }
 
   prev() {
-    this.signupSlider.slidePrev();
+    this.attendanceSlider.slidePrev();
   }
 
   save() {
 
-    // this.submitAttempt = true;
+    console.log(this.user_token)
+    console.log(this.attendance_id)
+    console.log(this.mirror_id)
+    console.log(this.slideOneForm.value);
+    console.log("success!")
+    this.attendanceService.updateCadastre(this.user_token,this.attendance_id,this.mirror_id,this.slideOneForm.value,)
+    .subscribe((resp)=>{
+      console.log(resp)
+    })
 
-    // if (!this.slideOneForm.valid) {
-    //   this.signupSlider.slideTo(0);
-    // }
-    // else if (!this.slideTwoForm.valid) {
-    //   this.signupSlider.slideTo(1);
-    // }
-    // else {
-      console.log("success!")
-      console.log(this.slideOneForm.value);
-    // }
+  }
 
+
+  getImage() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageURI = imageData;
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
+  }
+
+  uploadFile() {
+    let loader = this.loadingCtrl.create({
+      content: "Enviando..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'ionicfile',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+
+    fileTransfer.upload(this.imageURI, 'http://192.168.0.7:8080/api/uploadImage', options)
+      .then((data) => {
+        console.log(this.imageURI);
+        console.log(data + " Uploaded Successfully");
+        this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+        loader.dismiss();
+        this.presentToast("Imagem enviada com sucesso");
+      }, (err) => {
+        console.log(err);
+        loader.dismiss();
+        this.presentToast(err);
+      });
+  }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 6000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Mensagem Fechada');
+    });
+
+    toast.present();
   }
 }

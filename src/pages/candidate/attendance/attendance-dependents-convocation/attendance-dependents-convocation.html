@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <h2>Dependentes</h2>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class='text-center' padding>
+    <h4 class='text-center second-animation'>
+      <p *ngIf="this.dependents_new">Então <b>{{user_name}}</b>, você não possui nenhum dependente. Está correto? Se sim, clique em Finalizar.</p>
+      <p *ngIf="!this.dependents_new">Então <b>{{user_name}}</b>, esses são seus dependentes na CODHAB. Fique à vontade para verificar tudo. Se tiver tudo ok clique em Finalizar. </p>
+      <p>Caso queira adicionar um dependente clique em Adicionar Dependente</p>
+    </h4>
+    <button ion-button full color="primary" (click)="addDependent(attendance_id)">Adicionar Dependente</button>
+    <button ion-button full color="primary" (click)="goToAttendance()">Finalizar</button>
+    </div>
+</ion-content>
