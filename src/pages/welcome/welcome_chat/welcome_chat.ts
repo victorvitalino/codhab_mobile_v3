@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule, Events } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { LoginServiceProvider } from '../../../providers/login-service/login-service';
@@ -19,6 +19,7 @@ export class WelcomeChatPage {
   constructor(public navCtrl: NavController, 
     public loginService: LoginServiceProvider,
     public toastCtrl:ToastController,
+    public events:Events,
     public navParams: NavParams) {
     this.cpf_cnpj = this.navParams.get('cpf_cnpj')
   }
@@ -41,6 +42,7 @@ export class WelcomeChatPage {
         if (status == 401){
           this.presentToast(response['data']['errors']['code'])
         }else{
+          this.createUser(this.name)
           this.loginService.signUser(this.cpf_cnpj,response['data']['auth_token'],this.name)
           this.navCtrl.setRoot('NavigationPage')
         }
@@ -59,7 +61,10 @@ export class WelcomeChatPage {
         })
     }
   }
-
+  createUser(user) {
+    console.log('User created!')
+    this.events.publish('user:created', user, Date.now());
+  }
   goToPass() {
     this.navCtrl.push('WelcomePassPage')
   }

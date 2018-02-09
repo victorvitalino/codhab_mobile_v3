@@ -2,7 +2,7 @@
 <widget android-versionCode="327000" id="com.codhab.codhabapp" version="3.2.7" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>CODHAB</name>
     <description>Aplicativo da CODHAB</description>
-    <author email="suporte.app@codhab.df.gov.br" href="http://www.codhab.df.gov.br">CODHAB</author>
+    <author email="vitalino.victor@gmail.com" href="http://www.codhab.df.gov.br">Victor Vitalino</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

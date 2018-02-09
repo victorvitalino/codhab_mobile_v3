@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController, LoadingController } from 'ionic-angular';
+import { Nav, Platform, MenuController, LoadingController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from '@ionic-native/onesignal';
@@ -43,14 +43,22 @@ export class MyApp {
               public loadingCtrl:LoadingController,
               public service:LoginServiceProvider,
               private geolocation: Geolocation,
+              public events:Events,
               private menu: MenuController,
               private ga: GoogleAnalytics,
               public iab:InAppBrowser,
               public dataServiceProvider: DataServiceProvider
             ) {
     this.initializeApp();
-    this.getUserSigned();
-
+    this.getUserSigned()
+    events.subscribe('user:created', (user, time) => {
+      this.user_signed = true;
+      this.menu.enable(false, 'menu1');
+      this.menu.enable(true, 'menu2');
+      this.user_name = user;
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      console.log('Welcome', user, 'at', time);
+    });
 
     platform.ready().then(() => {
       this.geolocation.getCurrentPosition().then((resp) => {
@@ -89,6 +97,7 @@ export class MyApp {
     });
   }
   getUserSigned(){
+  
     this.service.getData().then((resp) => {
       this.service.getCheckCandidate(resp.cpf).subscribe((response)=>{
         this.user_name = response.name;
