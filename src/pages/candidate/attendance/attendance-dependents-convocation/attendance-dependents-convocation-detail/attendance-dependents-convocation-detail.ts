@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CodhabCommonProvider } from '../../../../../providers/codhab-common/codhab-common';
 import { UserDataProvider } from '../../../../../providers/user-data/user-data';
@@ -40,11 +40,12 @@ export class AttendanceDependentsConvocationDetailPage {
     public common: CodhabCommonProvider,
     public userService: UserDataProvider,
     public load: LoadingController,
+    public alertCtrl:AlertController,
     public attendanceService: AttendanceProvider,
     public formBuilder: FormBuilder) {
 
     this.slideOneForm = formBuilder.group({
-      name: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      name: '',
       cpf: '',
       gender_id: '',
       born: '',
@@ -135,4 +136,37 @@ export class AttendanceDependentsConvocationDetailPage {
       this.employ = false
     }
   }
+  editDependent(dependent_id) {
+    this.navCtrl.push('AttendanceDependentsConvocationEditPage', { attendance: this.attendance_id, dependent: dependent_id })
+  }
+  presentAlert(dependent_id) {
+    let alert = this.alertCtrl.create({
+      title: 'Atenção',
+      subTitle: 'Você está <b>removendo</b> um de seus dependentes, tem certeza disso?',
+      buttons: [
+        {
+          text: 'Agora Não',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Claro',
+          handler: () => {
+            this.removeDependent(dependent_id);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+  removeDependent(dependent_id) {
+    this.attendanceService.removeDependent(this.user_token, dependent_id, this.attendance_id).subscribe((resp) => {
+      if (resp.deleted === true) {
+        this.navCtrl.pop()
+      }
+    })
+  }
+
 }

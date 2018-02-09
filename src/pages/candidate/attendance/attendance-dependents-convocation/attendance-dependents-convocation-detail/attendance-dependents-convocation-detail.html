@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <h2>Editar Dependente</h2>
+      <h2>Detalhe Dependente</h2>
     </ion-title>
 
   </ion-navbar>
@@ -16,26 +16,26 @@
       <form [formGroup]="slideOneForm" *ngFor="let item of dependent">
         <ion-item>
           <ion-label stacked>Nome:</ion-label>
-          <ion-input formControlName="name" value="{{item.name}}"></ion-input>
+          <ion-input formControlName="name" value="{{item.name}}" disabled></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>CPF:</ion-label>
-          <ion-input placeholder="Apenas Números" formControlName="cpf" value="{{item.cpf}}"></ion-input>
+          <ion-input placeholder="Apenas Números" formControlName="cpf" value="{{item.cpf}}"disabled></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>Genero:</ion-label>
           <ion-select color="primary" [(ngModel)]="item.gender_id" formControlName="gender_id" multiple="false" placeholder="Escolha o genero"
-            name="gender_id">
+            name="gender_id"disabled>
             <ion-option selected *ngFor="let g of this.gender" value="{{g.id}}">{{g.name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label stacked>Nascimento:</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" formControlName="born" [(ngModel)]="item.born" value="item.born" name="born"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" disabled formControlName="born" [(ngModel)]="item.born" value="item.born" name="born"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label stacked>Cidade de Nascimento:</ion-label>
-          <ion-input formControlName="place_birth" value="{{item.place_birth}}"></ion-input>
+          <ion-input formControlName="place_birth" value="{{item.place_birth}}"disabled></ion-input>
         </ion-item>
       </form>
       <button ion-button full color="primary" (click)="next()">Próximo</button>
@@ -45,26 +45,26 @@
       <form [formGroup]="slideOneForm" *ngFor="let item of dependent">
         <ion-item>
           <ion-label stacked>Nacionalidade:</ion-label>
-          <ion-input formControlName="nationality" name="nationality" value="{{item.nationality}}"></ion-input>
+          <ion-input formControlName="nationality" name="nationality" value="{{item.nationality}}" disabled></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>RG:</ion-label>
-          <ion-input formControlName="rg" value="{{item.rg}}" name="rg"></ion-input>
+          <ion-input formControlName="rg" value="{{item.rg}}" name="rg" disabled></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>RG-ORG:</ion-label>
-          <ion-input formControlName="rg_org" value="{{item.rg_org}}" name="rg_org"></ion-input>
+          <ion-input formControlName="rg_org" value="{{item.rg_org}}" name="rg_org" disabled></ion-input>
         </ion-item>
         <ion-item>
           <ion-label stacked>RG-UF:</ion-label>
           <ion-select formControlName="rg_uf_id" [(ngModel)]="item.rg_uf_id" color="primary" multiple="false" placeholder="Escolha o UF"
-            name="rg_uf_id">
+            name="rg_uf_id" disabled>
             <ion-option *ngFor="let state of this.states" value="{{state.id}}">{{state.acronym}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label stacked>NIS</ion-label>
-          <ion-input name="nis" value="{{item.nis}}" formControlName="nis"></ion-input>
+          <ion-input name="nis" value="{{item.nis}}" formControlName="nis" disabled></ion-input>
         </ion-item>
       </form>
       <ion-grid>
@@ -83,14 +83,14 @@
       <form [formGroup]="slideOneForm" *ngFor="let item of dependent">
         <ion-item>
           <ion-label stacked>Estado Civil</ion-label>
-          <ion-select color="primary" multiple="false" [(ngModel)]="item.civil_state_id" formControlName="civil_state_id" placeholder="Estado Civil"
+          <ion-select color="primary" multiple="false" disabled [(ngModel)]="item.civil_state_id" formControlName="civil_state_id" placeholder="Estado Civil"
             name="civil_state">
             <ion-option *ngFor="let civil of this.civilStates" value="{{civil.id}}">{{civil.name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label stacked>Parentesco</ion-label>
-          <ion-select color="primary" multiple="false" [(ngModel)]="item.kinship_id" formControlName="kinship_id" placeholder="Escolha o parentesco"
+          <ion-select color="primary" multiple="false" disabled [(ngModel)]="item.kinship_id" formControlName="kinship_id" placeholder="Escolha o parentesco"
             name="kinship">
             <ion-option *ngFor="let kinship of this.kinships" value="{{kinship.id}}">{{kinship.name}}</ion-option>
           </ion-select>
@@ -112,7 +112,7 @@
       <form [formGroup]="slideOneForm" *ngFor="let item of dependent">
         <ion-item>
           <ion-label stacked>Condição Especial?</ion-label>
-          <ion-select color="primary" formControlName="special_condition" [(ngModel)]="item.special_condition" placeholder="Condição Especial"
+          <ion-select color="primary" disabled formControlName="special_condition" [(ngModel)]="item.special_condition" placeholder="Condição Especial"
             name="special_condition" (ionChange)="specialConditionCheck(item.special_condition)">
             <ion-option value="true">Sim</ion-option>
             <ion-option value="false">Não</ion-option>
@@ -120,14 +120,14 @@
         </ion-item>
         <ion-item *ngIf="specialCheck">
           <ion-label stacked>Tipo de Condição Especial</ion-label>
-          <ion-select color="primary" formControlName="special_condition_type_id" [(ngModel)]="item.special_condition_type_id" multiple="false"
+          <ion-select color="primary" disabled formControlName="special_condition_type_id" [(ngModel)]="item.special_condition_type_id" multiple="false"
             placeholder="Condição Especial" name="special_condition_type_id">
             <ion-option *ngFor="let spec of this.special" value="{{spec.id}}">{{spec.name}}</ion-option>
           </ion-select>
         </ion-item>
         <ion-item *ngIf="specialCheck">
           <ion-label stacked>CID</ion-label>
-          <ion-input name="cid" value="{{item.cid}}" formControlName="cid"></ion-input>
+          <ion-input name="cid" disabled value="{{item.cid}}" formControlName="cid"></ion-input>
         </ion-item>
       </form>
       <ion-grid>
@@ -141,28 +141,20 @@
         </ion-row>
       </ion-grid>
     </ion-slide>
-    <ion-slide>
-      <img class="checkimg" src="assets/images/animat-checkmark-color.gif" />
+    <ion-slide *ngFor="let item of dependent">
       <h3>
-        Quase lá
+        Então
         <b>
-
           {{user_name}},
         </b>
       </h3>
       <p>
-        Você inseriu todos os dados relevantes, agora para concluir clique em salvar.
+        esses são os dados do <b>{{item.name}}</b>, se estiver faltando algo você pode editar o cadastro. Caso ele não seja
+        seu <b>conjuge/companheiro</b> você pode exclui-lo. O que deseja fazer??
       </p>
-      <ion-grid>
-        <ion-row>
-          <ion-col style="text-align: center">
-            <button ion-button full color="primary" (click)="prev()">Anterior</button>
-          </ion-col>
-          <ion-col style="text-align: center">
-            <button ion-button full color="primary" (click)="save()">Salvar</button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+        <button ion-button full color="primary" (click)="prev()">Anterior</button>
+        <button ion-button full color="success" (click)="editDependent(item.id)">Editar</button>
+        <button *ngIf="item.kinship_id != 6" ion-button full color="danger" (click)="presentAlert(item.id)">Apagar</button>
     </ion-slide>
   </ion-slides>
 
