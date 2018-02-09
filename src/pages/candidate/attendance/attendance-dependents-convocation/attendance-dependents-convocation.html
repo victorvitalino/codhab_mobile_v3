@@ -26,7 +26,7 @@
     <b>Nome: {{item.name}}</b>
     <small>Parentesco: {{item.kinship_name}}</small>
     <small>CPF: {{item.cpf}}</small>
-    <button ion-button small color="primary" (click)="console.log('oi')">Detalhes</button>
+    <button ion-button small color="primary" (click)="showDependent(item.id)">Detalhes</button>
     <button ion-button small color="success" (click)="editDependent(item.id)">Editar</button>
     <button *ngIf="item.kinship_id !== 6" ion-button small color="danger" (click)="presentAlert(item.id)">Apagar</button>
   </ion-card>

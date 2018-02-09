@@ -45,7 +45,7 @@ export class AttendanceProvider {
     myHeaders.set('Content-Type', 'application/json');
     myHeaders.set('Accept', 'text/plain');
     myHeaders.set('Authorization', token)
-
+    
     return this.http.get('/pc/attendance/tickets/'+ticket_id+'/cadastres', { headers: myHeaders })
       .map(this.extractData);
   }

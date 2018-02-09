@@ -56,16 +56,21 @@ export class AttendanceDependentsConvocationPage {
   addDependent(id){
     this.navCtrl.push('AttendanceDependentsConvocationNewPage',{id})
   }
+
+  showDependent(dependent_id){
+    this.navCtrl.push('AttendanceDependentsConvocationDetailPage', { dependent: dependent_id })
+  }
+
+  editDependent(dependent_id) {
+    this.navCtrl.push('AttendanceDependentsConvocationEditPage', { attendance: this.attendance_id, dependent: dependent_id })
+  }
+
   removeDependent(dependent_id){
     this.attendanceService.removeDependent(this.user_token,dependent_id,this.attendance_id).subscribe((resp)=>{
       if(resp.deleted === true){
         this.getDependents()
       }
     })
-  }
-
-  editDependent(dependent_id){
-    this.navCtrl.push('AttendanceDependentsConvocationEditPage',{attendance:this.attendance_id,dependent:dependent_id})
   }
   
   presentAlert(dependent_id) {
