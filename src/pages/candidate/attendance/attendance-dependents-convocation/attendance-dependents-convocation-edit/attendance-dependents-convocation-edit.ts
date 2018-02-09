@@ -1,4 +1,4 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CodhabCommonProvider } from '../../../../../providers/codhab-common/codhab-common';
@@ -6,16 +6,17 @@ import { UserDataProvider } from '../../../../../providers/user-data/user-data';
 import { AttendanceProvider } from '../../../../../providers/attendance/attendance';
 @IonicPage()
 @Component({
-  selector: 'page-attendance-dependents-convocation-new',
-  templateUrl: 'attendance-dependents-convocation-new.html',
+  selector: 'page-attendance-dependents-convocation-edit',
+  templateUrl: 'attendance-dependents-convocation-edit.html',
 })
-export class AttendanceDependentsConvocationNewPage {
+export class AttendanceDependentsConvocationEditPage {
 
   cpf: string = '';
   DECIMAL_SEPARATOR = ".";
   GROUP_SEPARATOR = ",";
   pureResult: any;
-  candidate: object;
+  dependent: object;
+  dependent_id:number;
   maskedId: any;
   val: any;
   v: any;
@@ -25,7 +26,7 @@ export class AttendanceDependentsConvocationNewPage {
   kinships: any;
   employ: any;
   civilStates: any;
-  specialCheck: boolean = false;
+  specialCheck: boolean = true;
   attendance_id: number;
   user_token: string;
   user_name: string = '';
@@ -35,10 +36,10 @@ export class AttendanceDependentsConvocationNewPage {
 
   slideOneForm: FormGroup;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public common:CodhabCommonProvider,
-    public userService:UserDataProvider,
-    public load: LoadingController,
-    public attendanceService:AttendanceProvider,
+    public common: CodhabCommonProvider,
+    public userService: UserDataProvider,
+    public load:LoadingController,
+    public attendanceService: AttendanceProvider,
     public formBuilder: FormBuilder) {
 
     this.slideOneForm = formBuilder.group({
@@ -51,9 +52,9 @@ export class AttendanceDependentsConvocationNewPage {
       rg: '',
       rg_uf_id: '',
       rg_org: '',
-      income:'',
-      kinship_id:'',
-      place_birth:'',
+      income: '',
+      kinship_id: '',
+      place_birth: '',
       employment: '',
       cid: '',
       nis: '',
@@ -67,15 +68,25 @@ export class AttendanceDependentsConvocationNewPage {
     this.getSpecials()
     this.getCivilStates()
     this.getKinship()
-
+    this.userService.getData().then((resp) => {
+      this.user_name = resp.name;
+      this.user_token = resp.auth;
+      this.attendance_id = this.navParams.get('attendance')
+      this.dependent_id = this.navParams.get('dependent')
+      console.log(this.dependent_id)
+      this.attendanceService.getDependentDetail(this.user_token, this.attendance_id, this.dependent_id)
+        .subscribe((resp) => {
+          if(resp.kinship_id == 6){
+            this.kinships = [{'id':'6','name':'Conj/Comp'}]
+          }
+          console.log(this.kinships)
+          this.dependent = Array.of(resp)
+        })
+    });
   }
 
   ionViewDidLoad() {
-    this.userService.getData().then((resp) => {
-      this.attendance_id = this.navParams.get('id')
-      this.user_name = resp.name;
-      this.user_token = resp.auth;
-    });
+  
   }
   next() {
     this.attendanceSlider.slideNext();
@@ -90,17 +101,15 @@ export class AttendanceDependentsConvocationNewPage {
       content: "Salvando Dados",
       spinner: 'crescent'
     });
-    
+
     loader.present();
     this.slideOneForm.value['cpf'] = this.unFormat(this.slideOneForm.value['cpf'])
     console.log(this.slideOneForm.value);
-    this.attendanceService.createDependent(this.user_token, this.attendance_id, this.slideOneForm.value)
+    this.attendanceService.updateDependent(this.user_token, this.attendance_id,this.dependent_id,this.slideOneForm.value)
       .subscribe((resp) => {
-        console.log(resp)
         loader.dismiss();
-        this.navCtrl.pop(); 
+        this.navCtrl.pop();
       })
-
   }
 
 
@@ -131,10 +140,10 @@ export class AttendanceDependentsConvocationNewPage {
   }
 
   cpf_mask(v) {
-    v = v.replace(/\D/g, '');
-    v = v.replace(/(\d{3})(\d)/, '$1.$2');
-    v = v.replace(/(\d{3})(\d)/, '$1.$2'); 
-    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    v = v.replace(/\D/g, ''); //Remove all that is not digits
+    v = v.replace(/(\d{3})(\d)/, '$1.$2'); //Insert a dot between the third and quarter digit
+    v = v.replace(/(\d{3})(\d)/, '$1.$2'); //Insert a dot between the third and quarter digit again
+    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); //Insert an dash between the third and quarter digit
     return v;
   }
   getGender() {
@@ -151,6 +160,7 @@ export class AttendanceDependentsConvocationNewPage {
   getCivilStates() {
     this.common.getCivilState().subscribe((resp) => {
       this.civilStates = resp
+      console.log(this.civilStates)
     })
   }
   getSpecials() {

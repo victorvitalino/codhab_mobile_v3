@@ -18,6 +18,7 @@ export class AttendanceCadastreConvocationPage {
   imageURI: any;
   imageFileName: any;
   user_token: string = '';
+  user_name: string = '';
   attendance_id: number;
   mirror_id: number;
   cadastre: any;
@@ -25,6 +26,7 @@ export class AttendanceCadastreConvocationPage {
   states: any;
   special: any;
   civilStates: any;
+  first_civil_id: number;
   bornCities: any;
   workCities: any;
   weddingCheck: boolean = false;
@@ -48,6 +50,7 @@ export class AttendanceCadastreConvocationPage {
     private camera: Camera,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController, 
+    public load:LoadingController,
     private userService: UserDataProvider, 
     private common:CodhabCommonProvider,
     public formBuilder: FormBuilder,
@@ -89,42 +92,52 @@ export class AttendanceCadastreConvocationPage {
       this.getSpecials()
       this.getCivilStates()
   }
-
   ionViewDidLoad() {
-
-
     this.userService.getData().then((resp) => {
       this.attendance_id = this.navParams.get('id')
       this.user_token = resp.auth
+      this.user_name = resp.name
       this.attendanceService.getAttendanceMirror(this.user_token, this.attendance_id).subscribe((resp) => {
-      this.mirror_id = resp.id;
-      this.cadastre = Array.of(resp)
-      console.log(this.cadastre)
-        console.log(this.cadastre[0]['wedding_date'], this.cadastre[0]['arrival_df'], this.cadastre[0]['wedding_date'])
-      if(this.cadastre[0]['born'] == undefined){
-          this.startDateBorn = new Date('01/01/2018').toISOString();
-        }else{
-          this.startDateBorn = new Date(this.cadastre[0]['born']).toISOString();
-        }
-        if(this.cadastre[0]['wedding_date'] == undefined){
-          this.startDateWedding = new Date('01/01/2018').toISOString();
-        }else{
-          this.startDateWedding = new Date(this.cadastre[0]['wedding_date']).toISOString();
-        }
-        if (this.cadastre[0]['arrival_df'] == undefined){
-          this.startDateArrival = new Date('01/01/2018').toISOString();
-        }else{
-          this.startDateArrival = new Date(this.cadastre[0]['arrival_df']).toISOString();
-        }
-        if (this.cadastre[0]['admission_date'] == undefined){
-          this.startDateAdmission = new Date('01/01/2018').toISOString();
-        }else{
-          this.startDateAdmission = new Date(this.cadastre[0]['admission_date']).toISOString();
-        }
+        this.mirror_id = resp.id;
+        this.civilCheck(resp.civil_state_id)
+        this.employmentCheck(resp.employment)
+        console.log(resp.special_condition)
+        this.specialConditionCheck(resp.especial_condition)
+        this.cadastre = Array.of(resp)
         console.log(this.cadastre)
-        console.log(this.gender)
+        console.log(this.cadastre[0]['born'], this.cadastre[0]['arrival_df'], this.cadastre[0]['wedding_date'], this.cadastre[0]['admission_date'])
+        if (this.cadastre[0]['born'] == undefined) {
+          this.startDateBorn = new Date('01/01/2018').toISOString();
+        } else {
+          let date = this.cadastre[0]['born']
+          let res = date.split("/");
+          this.startDateBorn = new Date(res[1] + "/" + res[0] + "/" + res[2]).toISOString();
+        }
+        if (this.cadastre[0]['wedding_date'] == undefined || this.cadastre[0]['wedding_date'] == null || this.cadastre[0]['wedding_date'] == '' || this.cadastre[0]['wedding_date'] == NaN) {
+          this.startDateWedding = new Date('01/01/2018').toISOString();
+        } else {
+          let date = this.cadastre[0]['wedding_date']
+          let res = date.split("/");
+          this.startDateWedding = new Date(res[1] + "/" + res[0] + "/" + res[2]).toISOString();
+        }
+        if (this.cadastre[0]['arrival_df'] == undefined) {
+          this.startDateArrival = new Date('01/01/2018').toISOString();
+        } else {
+          let date = this.cadastre[0]['arrival_df']
+          let res = date.split("/");
+          this.startDateArrival = new Date(res[1] + "/" + res[0] + "/" + res[2]).toISOString();
+        }
+        if (this.cadastre[0]['admission_date'] === undefined) {
+          this.startDateAdmission = new Date('01/01/2018').toISOString();
+        } else {
+          let date = this.cadastre[0]['admission_date']
+          let res = date.split("/");
+          this.startDateAdmission = new Date(res[1] + "/" + res[0] + "/" + res[2]).toISOString();
+        }
       })
     });
+
+
     
   }
   getGender(){
@@ -169,7 +182,7 @@ export class AttendanceCadastreConvocationPage {
   }
   specialConditionCheck(check){
     console.log(check)
-    if(check === "true"){
+    if(check === "true" || check === true){
       this.specialCheck= true
     }else{
       this.specialCheck = false
@@ -177,7 +190,7 @@ export class AttendanceCadastreConvocationPage {
   }
   employmentCheck(check){
     console.log(check)
-    if(check === "true"){
+    if(check === "true" || check === true){
       this.employ = true
     }else{
       this.employ = false
@@ -193,15 +206,17 @@ export class AttendanceCadastreConvocationPage {
   }
 
   save() {
+    let loader = this.load.create({
+      content: "Salvando Dados",
+      spinner: 'crescent'
+    });
 
-    console.log(this.user_token)
-    console.log(this.attendance_id)
-    console.log(this.mirror_id)
-    console.log(this.slideOneForm.value);
-    console.log("success!")
+    loader.present();
     this.attendanceService.updateCadastre(this.user_token,this.attendance_id,this.mirror_id,this.slideOneForm.value,)
     .subscribe((resp)=>{
       console.log(resp)
+      loader.dismiss();
+      this.navCtrl.pop();
     })
 
   }

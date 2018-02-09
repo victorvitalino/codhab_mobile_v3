@@ -77,6 +77,32 @@ export class AttendanceProvider {
     return this.http.post('/pc/attendance/tickets/' + ticket_id + '/dependents', obj ,{ headers: myHeaders })
       .map(this.extractData)
   }
+  updateDependent(token,ticket_id,dependent_id,obj){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+
+    return this.http.put('/pc/attendance/tickets/' + ticket_id + '/dependents/'+dependent_id, obj ,{ headers: myHeaders })
+      .map(this.extractData)
+  }
+  getDependentDetail(token,ticket_id,dependent_id){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+    return this.http.get('/pc/attendance/tickets/' + ticket_id + '/dependents/'+dependent_id, { headers: myHeaders })
+      .map(this.extractData)
+  }
+  removeDependent(token,dependent_id,ticket_id){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+
+    return this.http.delete('/pc/attendance/tickets/'+ticket_id+'/dependents/'+dependent_id, { headers: myHeaders })
+    .map(this.extractData)
+  }
 
   private extractData(res: Response) {
     let body = res.json();

@@ -28,5 +28,9 @@ export class CodhabCommonProvider {
   getCities(state_id){
     return this.httpclient.get('/pc/common/states/' + state_id).map(resp => resp['data']['cities']['data']);
   }
+
+  getKinship(){
+    return this.httpclient.get('/pc/common/kinships').map(resp => resp['data']);
+  }
   
 }
