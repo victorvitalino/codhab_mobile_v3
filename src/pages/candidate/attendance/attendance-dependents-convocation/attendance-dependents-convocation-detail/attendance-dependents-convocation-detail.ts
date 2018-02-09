@@ -44,7 +44,7 @@ export class AttendanceDependentsConvocationDetailPage {
     public formBuilder: FormBuilder) {
 
     this.slideOneForm = formBuilder.group({
-      name: '',
+      name: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       cpf: '',
       gender_id: '',
       born: '',
@@ -71,15 +71,13 @@ export class AttendanceDependentsConvocationDetailPage {
     this.getKinship()
     this.userService.getData().then((resp) => {
       this.user_name = resp.name;
+      this.user_token = resp.auth;
       this.dependent_id = this.navParams.get('dependent')
-      console.log(this.dependent_id)
+      this.attendance_id = this.navParams.get('attendance')
       this.attendanceService.getDependentDetail(this.user_token, this.attendance_id, this.dependent_id)
         .subscribe((resp) => {
-          if (resp.kinship_id == 6) {
-            this.kinships = [{ 'id': '6', 'name': 'Conj/Comp' }]
-          }
-          console.log(this.kinships)
           this.dependent = Array.of(resp)
+          console.log(this.dependent)
         })
     });
   }
@@ -95,56 +93,6 @@ export class AttendanceDependentsConvocationDetailPage {
     this.attendanceSlider.slidePrev();
   }
 
-  // save() {
-  //   let loader = this.load.create({
-  //     content: "Salvando Dados",
-  //     spinner: 'crescent'
-  //   });
-
-  //   loader.present();
-  //   this.slideOneForm.value['cpf'] = this.unFormat(this.slideOneForm.value['cpf'])
-  //   console.log(this.slideOneForm.value);
-  //   this.attendanceService.updateDependent(this.user_token, this.attendance_id, this.dependent_id, this.slideOneForm.value)
-  //     .subscribe((resp) => {
-  //       loader.dismiss();
-  //       this.navCtrl.pop();
-  //     })
-  // }
-
-
-  format(valString) {
-    if (!valString) {
-      return '';
-    }
-    let val = valString.toString();
-    const parts = this.unFormat(val).split(this.DECIMAL_SEPARATOR);
-    this.pureResult = parts;
-    if (parts[0].length <= 11) {
-      this.maskedId = this.cpf_mask(parts[0]);
-      return this.maskedId;
-    }
-  }
-
-  unFormat(val) {
-    if (!val) {
-      return '';
-    }
-    val = val.replace(/\D/g, '');
-
-    if (this.GROUP_SEPARATOR === ',') {
-      return val.replace(/,/g, '');
-    } else {
-      return val.replace(/\./g, '');
-    }
-  }
-
-  cpf_mask(v) {
-    v = v.replace(/\D/g, ''); //Remove all that is not digits
-    v = v.replace(/(\d{3})(\d)/, '$1.$2'); //Insert a dot between the third and quarter digit
-    v = v.replace(/(\d{3})(\d)/, '$1.$2'); //Insert a dot between the third and quarter digit again
-    v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); //Insert an dash between the third and quarter digit
-    return v;
-  }
   getGender() {
     this.common.getGender().subscribe((resp) => {
       this.gender = resp
@@ -153,13 +101,11 @@ export class AttendanceDependentsConvocationDetailPage {
   getStates() {
     this.common.getStates().subscribe((resp) => {
       this.states = resp
-      console.log(this.states)
     })
   }
   getCivilStates() {
     this.common.getCivilState().subscribe((resp) => {
       this.civilStates = resp
-      console.log(this.civilStates)
     })
   }
   getSpecials() {

@@ -56,8 +56,7 @@ export class MyApp {
       this.menu.enable(false, 'menu1');
       this.menu.enable(true, 'menu2');
       this.user_name = user;
-      // user and time are the same arguments passed in `events.publish(user, time)`
-      console.log('Welcome', user, 'at', time);
+
     });
 
     platform.ready().then(() => {

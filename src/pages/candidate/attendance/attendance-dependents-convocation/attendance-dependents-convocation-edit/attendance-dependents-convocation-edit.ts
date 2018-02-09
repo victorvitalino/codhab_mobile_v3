@@ -43,7 +43,7 @@ export class AttendanceDependentsConvocationEditPage {
     public formBuilder: FormBuilder) {
 
     this.slideOneForm = formBuilder.group({
-      name: '',
+      name: ['', Validators.compose([Validators.maxLength(150), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       cpf: '',
       gender_id: '',
       born: '',
@@ -73,13 +73,12 @@ export class AttendanceDependentsConvocationEditPage {
       this.user_token = resp.auth;
       this.attendance_id = this.navParams.get('attendance')
       this.dependent_id = this.navParams.get('dependent')
-      console.log(this.dependent_id)
       this.attendanceService.getDependentDetail(this.user_token, this.attendance_id, this.dependent_id)
         .subscribe((resp) => {
           if(resp.kinship_id == 6){
             this.kinships = [{'id':'6','name':'Conj/Comp'}]
           }
-          console.log(this.kinships)
+          console.log(resp)
           this.dependent = Array.of(resp)
         })
     });

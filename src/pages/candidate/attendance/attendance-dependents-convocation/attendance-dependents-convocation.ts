@@ -26,7 +26,7 @@ export class AttendanceDependentsConvocationPage {
 
   ionViewWillEnter() {
 
-   this.loader = this.load.create({
+    this.loader = this.load.create({
       content: "Buscando Dados",
       spinner: 'crescent'
     });
@@ -58,7 +58,7 @@ export class AttendanceDependentsConvocationPage {
   }
 
   showDependent(dependent_id){
-    this.navCtrl.push('AttendanceDependentsConvocationDetailPage', { dependent: dependent_id })
+    this.navCtrl.push('AttendanceDependentsConvocationDetailPage', { attendance: this.attendance_id, dependent: dependent_id })
   }
 
   editDependent(dependent_id) {

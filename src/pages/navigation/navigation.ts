@@ -18,25 +18,6 @@ export class NavigationPage {
     public service:LoginServiceProvider) {
   }
 
-  ngOnInit() {
-    // this.service.getData()
-    // .then((resp) => {
-    //     console.log(resp)
-    //     if(resp.signed == true){
-    //       this.user_signed = true
-    //       this.menu.enable(true,'menu2')
-    //       this.menu.enable(false,'menu1')
-    //     }else{
-    //       this.user_signed = false
-    //       this.menu.enable(false, 'menu2')
-    //       this.menu.enable(true, 'menu1')
-    //     }
-    //   }).catch((error) => {
-    //       this.user_signed = false
-    //       this.menu.enable(false, 'menu2')
-    //       this.menu.enable(true, 'menu1')
-    //     })
-  }
   goToSchedule() {
     this.navCtrl.push('WelcomePage')
   }
@@ -47,8 +28,6 @@ export class NavigationPage {
 
   goToSearch() {
     this.navCtrl.push('HabitationSearchPage')
-  
-    
   }
   goToChat() {
     this.navCtrl.push('CandidateChatPage')
