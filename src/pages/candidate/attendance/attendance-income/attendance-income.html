@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class='text-center' padding>
+    <h4 class='text-center second-animation'>
+      <p>Então
+        <b>{{user_name}}</b>, você pode alterar aqui sua renda ou do seus dependentes cadastrados. </p>
+      <p>Se estiver tudo ok clique em finalizar.</p>
+    </h4>
+  </div>
+    <ion-card *ngFor="let item of dependents" padding>
+      <ion-icon name="ios-contacts-outline" item-start></ion-icon>
+      <b>Nome: {{item.name}}</b>
+      <small>Renda: {{item.income}}</small>
+      <small>CPF: {{item.cpf}}</small>
+      <button ion-button small color="primary" (click)="showDependent(item.id)">Editar</button>
+      <button ion-button small color="success" (click)="editDependent(item.id)">Enviar Documentação</button>
+    </ion-card>
+</ion-content>

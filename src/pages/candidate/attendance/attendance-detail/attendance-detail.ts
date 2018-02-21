@@ -41,4 +41,7 @@ export class AttendanceDetailPage {
   goToDependents(context,id){
     this.navCtrl.push('AttendanceDependentsConvocationPage',{id})
   }
+  goToIncome(id){
+    this.navCtrl.push('AttendanceIncomePage',{id})
+  }
 }

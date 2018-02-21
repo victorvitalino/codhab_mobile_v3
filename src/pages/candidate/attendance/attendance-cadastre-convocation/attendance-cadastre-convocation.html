@@ -13,7 +13,6 @@
   <ion-slides #attendanceSlider>
     <ion-slide>
       <h3>Vamos iniciar com seu dados pessoais.</h3>
-      <!-- <p *ngIf="submitAttempt" style="color: #ea6153;">Errrouu!.</p> -->
       <form [formGroup]="slideOneForm" *ngFor="let item of cadastre">
         <ion-item>
           <ion-label stacked>Nome:</ion-label>

@@ -21,7 +21,7 @@ export class AttendancePage {
 
 
   ionViewCanEnter() {
- 
+
     this.userService.getData().then((resp) => {
       this.user_name = resp.name
       this.user_token = resp.auth
@@ -44,13 +44,11 @@ export class AttendancePage {
     loader.present();
     this.attendanceService.getAttendances(this.user_token)
     .subscribe((resp) => {
-      console.log(resp)
       loader.dismiss(); 
       if(resp == undefined){
         this.presentAlert();
       }else{
         this.attendances = resp
-        console.log(this.attendances)
         this.attendances.forEach(element => {
           if (element['current_situation_name'] === "Em atualização"){
             this.attendance_new = false;
