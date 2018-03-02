@@ -7,8 +7,5 @@ export class AuthProvider {
   constructor(public http: HttpClient) {
     console.log('Hello AuthProvider Provider');
   }
-
-
-
   
 }

@@ -173,18 +173,18 @@ export class MyApp {
     this[exemption_nav] = value
   }
   
-  typingCallback(that) {
+  // typingCallback(that) {
 
-    let total_length = that.typewriter_text.length;
-    console.log(total_length)
-    let current_length = that.typewriter_display.length;
-    if (current_length < total_length) {
-      that.typewriter_display += that.typewriter_text[current_length];
-      setTimeout(that.typingCallback, 40, that);
-    } else {
-      that.enable_next_button = true;
-    }
-  }
+  //   let total_length = that.typewriter_text.length;
+  //   console.log(total_length)
+  //   let current_length = that.typewriter_display.length;
+  //   if (current_length < total_length) {
+  //     that.typewriter_display += that.typewriter_text[current_length];
+  //     setTimeout(that.typingCallback, 40, that);
+  //   } else {
+  //     that.enable_next_button = true;
+  //   }
+  // }
 
 
   // Navegações
@@ -192,7 +192,9 @@ export class MyApp {
   goToQrCode() {
     this.nav.push('QrcodePage')
   }
-
+  goToEntitySearch(){
+    this.nav.push('HabitationSearchPage')
+  }
   goToMorarBem(){
     console.log(this.latitude)
   }
@@ -275,7 +277,5 @@ export class MyApp {
   goToWelcome(){
     this.nav.setRoot('WelcomePage')
   }
-  teste(){
-    console.log('filho de uma piranha')
-  }
+
 }

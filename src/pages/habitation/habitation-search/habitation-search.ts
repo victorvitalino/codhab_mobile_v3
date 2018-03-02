@@ -19,7 +19,7 @@ entity: any;
       content: "Pesquisando..."
     });
     loader.present();
-    if(value <= 11){
+    if(value.length <= 11){
       this.data.getCandidate(value)
         .subscribe((response) => {
           this.candidate = response;

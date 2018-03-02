@@ -44,4 +44,7 @@ export class AttendanceDetailPage {
   goToIncome(id){
     this.navCtrl.push('AttendanceIncomePage',{id})
   }
+  goToContact(id){
+    this.navCtrl.push('AttendanceContactPage',{id})
+  }
 }

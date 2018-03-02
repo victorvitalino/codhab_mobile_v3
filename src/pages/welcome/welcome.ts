@@ -21,7 +21,6 @@ export class WelcomePage {
   maskedId: any;
   val: any;
   v: any;
-  teste:any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

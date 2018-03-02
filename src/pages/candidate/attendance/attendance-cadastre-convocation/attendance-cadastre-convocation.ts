@@ -111,6 +111,7 @@ export class AttendanceCadastreConvocationPage {
         } else {
           let date = this.cadastre[0]['born']
           let res = date.split("/");
+          console.log(res)
           this.startDateBorn = new Date(res[1] + "/" + res[0] + "/" + res[2]).toISOString();
         }
         if (this.cadastre[0]['wedding_date'] == undefined || this.cadastre[0]['wedding_date'] == null || this.cadastre[0]['wedding_date'] == '' || this.cadastre[0]['wedding_date'] == NaN) {
@@ -180,8 +181,7 @@ export class AttendanceCadastreConvocationPage {
       this.weddingCheck = false
     }
   }
-  specialConditionCheck(check){
-    console.log(check)
+  specialConditionCheck(check){ 
     if(check === "true" || check === true){
       this.specialCheck= true
     }else{
@@ -189,7 +189,6 @@ export class AttendanceCadastreConvocationPage {
     }
   }
   employmentCheck(check){
-    console.log(check)
     if(check === "true" || check === true){
       this.employ = true
     }else{

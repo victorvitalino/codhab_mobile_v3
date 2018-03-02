@@ -26,7 +26,9 @@ export class AttendanceIncomePage {
       this.user_name = resp.name
       this.user_token = resp.auth
       this.getDependents(this.attendance_id)
+  
     });
+  
   }
 
   getDependents(id) {
@@ -42,7 +44,6 @@ export class AttendanceIncomePage {
     this.attendanceService.getDependents(this.user_token,id)
       .subscribe((resp) => {
         this.dependents = resp
-        console.log(this.dependents)
       })
     loader.dismiss();
   }

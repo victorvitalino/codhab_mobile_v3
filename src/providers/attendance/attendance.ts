@@ -113,6 +113,15 @@ export class AttendanceProvider {
       .map(this.getJsonData)
   }
 
+  getContacts(token,ticket_id){
+    let myHeaders = new Headers();
+    myHeaders.set('Content-Type', 'application/json');
+    myHeaders.set('Accept', 'text/plain');
+    myHeaders.set('Authorization', token)
+    return this.http.get('/pc/attendance/tickets/' + ticket_id + '/contacts/', { headers: myHeaders })
+      .map(this.getJsonData)
+  }
+
   private getJsonData(res: Response) {
     let body = res.json();
     return body.data;

@@ -4,12 +4,58 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <img alt="logo" height="55" src="assets/imgs/logo-codhab.png">
+      <h2>Dados de Contato</h2>
     </ion-title>
+
   </ion-navbar>
 </ion-header>
-
-
 <ion-content padding>
+  <ion-slides #attendanceSlider>
+    <ion-slide>
+      <h3>Vamos começar? Quais desses dados estão ok?</h3>
+      <form [formGroup]="slideOneForm" *ngFor="let item of cadastre">
+        <ion-item>
+          <ion-label stacked>Email:</ion-label>
+          <ion-input formControlName="email" value="{{item.email}}" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Celular:</ion-label>
+          <ion-input [(ngModel)]="item.cell_phone" (keyup)="item.cell_phone = format(item.cell_phone)" formControlName="cell_phone" value="{{item.cell_phone}}" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Telefone:</ion-label>
+          <ion-input [(ngModel)]="item.telephone" (keyup)="item.telephone = format(item.telephone)" formControlName="telephone" value="{{item.telephone}}" ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Telefone Opcional:</ion-label>
+          <ion-input [(ngModel)]="item.telephone_optional" (keyup)="item.telephone_optional = format(item.telephone_optional)" formControlName="telephone_optional" value="{{item.telephone_optional}}"  ></ion-input>
+  
+        </ion-item>
+      </form>
+      <button ion-button full color="primary" (click)="next()">Próximo</button>
+    </ion-slide>
 
+    <ion-slide>
+      <img class="checkimg" src="assets/images/animat-checkmark-color.gif" />
+      <h3>
+        Quase lá
+        <b>
+          {{user_name}},
+        </b>
+      </h3>
+      <p>
+        Você inseriu todos os dados relevantes, agora para concluir clique em salvar.
+      </p>
+      <ion-grid>
+        <ion-row>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="prev()">Anterior</button>
+          </ion-col>
+          <ion-col style="text-align: center">
+            <button ion-button full color="primary" (click)="save()">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
